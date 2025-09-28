@@ -9,5 +9,11 @@ export function meta({}: Route.MetaArgs) {
 }
 
 export default function Home() {
+  return (
+    <div>
+      <h1>&#128640; or &#57397; &#58407;</h1>
+      <p>Check the size of your &#57647; after &#129413; takes their cut</p>
+    </div>
+  );
   return <Welcome />;
 }
