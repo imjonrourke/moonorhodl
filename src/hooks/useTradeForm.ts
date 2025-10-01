@@ -1,5 +1,8 @@
+import type { AssetType } from '../types';
+
 type UseTradeFormProps = {
   id?: number;
+  assetType: AssetType;
   name?: string;
   quantity?: number;
   amount?: number;
@@ -8,6 +11,7 @@ type UseTradeFormProps = {
 
 type UseTradeFormResult = {
   hasId: boolean;
+  assetTypeTitle: string;
   nameType: 'hidden' | 'text';
   nameValue: string;
   quantityType: 'hidden' | 'number';
@@ -18,7 +22,7 @@ type UseTradeFormResult = {
   dateValue: string;
 };
 
-export const useTradeForm: (props: UseTradeFormProps) => UseTradeFormResult = ({ id, name, quantity, amount, date }) => {
+export const useTradeForm: (props: UseTradeFormProps) => UseTradeFormResult = ({ id, assetType, name, quantity, amount, date }) => {
   const hasId = !!id;
   const nameType = name ? 'hidden' : 'text';
   const quantityType = quantity ? 'hidden' : 'number';
@@ -30,8 +34,23 @@ export const useTradeForm: (props: UseTradeFormProps) => UseTradeFormResult = ({
   const amountValue = `${amount || ''}`;
   const dateValue = date?.toLocaleDateString() || '';
 
+  let assetTypeTitle = '';
+
+  switch (assetType) {
+    case "forex":
+      assetTypeTitle = 'Forex';
+      break;
+    case "stock":
+      assetTypeTitle = 'Stock';
+      break;
+    case "crypto":
+    default:
+      assetTypeTitle = 'Crypto';
+  }
+
   return {
     hasId,
+    assetTypeTitle,
     nameType,
     nameValue,
     quantityType,

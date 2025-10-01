@@ -6,80 +6,138 @@ import {
   type GetTradesDataHandler,
   type RemoveTradesDataHandler,
   type RemoveTradeDataHandler,
-  type LocalStorageHandler,
+  type LocalStorageHandler, type SetTradesDataProps,
 } from './LocalStorageProps';
+import type { ErrorResponse } from '../../types';
 
 export const LocalStorage: LocalStorageHandler = () => {
-  const getTradesData: GetTradesDataHandler = () => {
-    const tradesData = window.localStorage.getItem(TRADES_LIST);
+  const getTradesData: GetTradesDataHandler = async () => {
+    return new Promise((resolve, reject) => {
+      const tradeList = window.localStorage.getItem(TRADES_LIST);
+      let data: SetTradesDataProps = {
+        trades: [],
+      };
 
-    let trades = { trades: [] };
-    if (tradesData) {
-      try {
-        trades = JSON.parse(tradesData) as SetTradesDataProps;
-      } catch(e) {
-
+      if (tradeList) {
+        try {
+          data = JSON.parse(tradeList) as SetTradesDataProps;
+          resolve({ data, error: null });
+        } catch (e) {
+          resolve(
+            {
+              data: null,
+              error: {
+                status: 503,
+                message: 'invalid',
+              },
+            },
+          );
+        }
       }
-    }
-    return trades;
+
+      resolve({ data, error: null });
+    });
   };
 
   const setTradesData: SetTradesDataHandler = (props) => {
-
     window.localStorage.setItem(TRADES_LIST, JSON.stringify(props));
   };
 
-  const addTradesData: SetTradesDataHandler = ({ trades }) => {
-    const currentTrades = getTradesData();
+  const addTradesData: SetTradesDataHandler = async ({ trades }) => {
+    const { data } = await getTradesData();
 
     const tradesWithIds = trades.map((trade, index) => ({
       ...trade,
-      id: currentTrades.trades[currentTrades.trades.length - 1].id + index + 1,
+      id: (data?.trades[data?.trades.length - 1]?.id || 0) + index + 1,
     }));
 
-    const newTrades = [...currentTrades.trades, ...tradesWithIds];
+    const newTrades = {
+      ...data,
+      trades: [...(data?.trades || []), ...tradesWithIds],
+  };
 
     setTradesData(newTrades);
   };
 
-  const removeTradeData: RemoveTradeDataHandler = (tradeId: number) => {
-    const currentTrades = getTradesData();
+  const removeTradeData: RemoveTradeDataHandler = async (tradeId: number) => {
+    const { data } = await getTradesData();
 
-    const newTrades = currentTrades.filter((trade) => trade.id !== tradeId);
+    const newTrades = {
+      ...data,
+      trades: data?.trades.filter((trade) => trade.id !== tradeId) || [],
+    };
 
-    setTradesData({ ...currentTrades, trades: newTrades });
-  };
-
-  const removeTradesData: RemoveTradesDataHandler = (tradeIds: number[]) => {
-    const currentTrades = getTradesData();
-
-    const newTrades = currentTrades.filter((trade) => !tradeIds.find((id) => id === trade.id));
-
-    setTradesData({ ...currentTrades, trades: newTrades });
-  };
-
-  const getBaseIncomeData: GetBaseIncomeDataHandler = () => {
-    const baseIncomeData = window.localStorage.getItem(BASE_INFO);
-
-    let income = '', filingStatus = '';
-
-    if (baseIncomeData) {
-      try {
-        const result = JSON.parse(baseIncomeData);
-        income = result.income;
-        filingStatus = result.filingStatus;
-
-        return {
-          income,
-          filingStatus,
-        };
-      } catch(e) {}
+    if (data?.trades.length === newTrades.trades.length) {
+      return {
+        data: null,
+        error: {
+          status: 404,
+          message: 'Trade not found',
+        },
+      };
     }
 
+    setTradesData(newTrades);
+
     return {
-      income,
-      filingStatus,
+      data: newTrades,
+      error: null,
     };
+  };
+
+  const removeTradesData: RemoveTradesDataHandler = async (tradeIds: number[]) => {
+    const { data } = await getTradesData();
+
+    const newTrades = {
+      ...data,
+      trades: data?.trades.filter((trade) => !tradeIds.find((id) => id === trade.id)) || []
+    };
+
+    if (data?.trades.length === newTrades.trades.length) {
+      return {
+        data: null,
+        error: {
+          status: 404,
+          message: 'trade ids not found',
+        },
+      };
+    }
+
+    setTradesData(newTrades);
+
+    return {
+      data: newTrades,
+      error: null,
+    };
+  };
+
+  const getBaseIncomeData: GetBaseIncomeDataHandler = async () => {
+    return new Promise((resolve, reject) => {
+      const data = {
+        income: '',
+        filingStatus: '',
+      };
+
+      const baseIncomeData = window.localStorage.getItem(BASE_INFO);
+
+      if (baseIncomeData) {
+        try {
+          const result = JSON.parse(baseIncomeData);
+          data.income = result.income;
+          data.filingStatus = result.filingStatus;
+
+          resolve({ data,  error: null });
+        } catch (e) {
+          resolve({
+            data: null,
+            error: {
+              status: 503,
+              message: 'invalid',
+            },
+          });
+        }
+      }
+    });
   };
 
   const setBaseIncomeData: SetBaseIncomeDataHandler = ({ income, filingStatus }) => {
