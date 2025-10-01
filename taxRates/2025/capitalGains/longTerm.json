@@ -1,0 +1,58 @@
+{
+  "single": [
+    {
+      "limit": 48350,
+      "rate": 0
+    },
+    {
+      "limit": 533400,
+      "rate": 0.15
+    },
+    {
+      "limit": -1,
+      "rate": 0.2
+    }
+  ],
+  "marriedJointly": [
+    {
+      "limit": 96700,
+      "rate": 0
+    },
+    {
+      "limit": 600050,
+      "rate": 0.15
+    },
+    {
+      "limit": -1,
+      "rate": 0.2
+    }
+  ],
+  "marriedSeparately": [
+    {
+      "limit": 48350,
+      "rate": 0
+    },
+    {
+      "limit": 300025,
+      "rate": 0.15
+    },
+    {
+      "limit": -1,
+      "rate": 0.2
+    }
+  ],
+  "headOfHousehold": [
+    {
+      "limit": 64850,
+      "rate": 0
+    },
+    {
+      "limit": 561100,
+      "rate": 0.15
+    },
+    {
+      "limit": -1,
+      "rate": 0.2
+    }
+  ]
+}
