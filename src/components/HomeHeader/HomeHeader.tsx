@@ -1,4 +1,4 @@
-import { Emoji } from '../Emoji';
+import { Emoji } from '~/components/app/Emoji';
 
 export const HomeHeader = () =>   {
   return (

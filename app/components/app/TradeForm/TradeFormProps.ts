@@ -1,9 +1,8 @@
-import type { BaseProps } from '../../types';
-
-export type TradeType = 'buy' | 'sell' | 'swap';
+import type { AssetType, BaseProps, TradeType } from '../../../../src/types';
 
 export interface TradeFormProps extends BaseProps {
   type: TradeType;
+  assetType: AssetType;
   id?: number;
   name?: string;
   quantity?: number;
