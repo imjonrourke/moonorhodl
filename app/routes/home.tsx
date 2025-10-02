@@ -2,10 +2,11 @@ import type { Route } from './+types/home';
 import { type ClientLoaderFunctionArgs, type ClientActionFunctionArgs, useFetcher } from 'react-router';
 import * as FederalIncomeTaxRates from '../../taxRates/2025/income/federal.json';
 import * as FederalLongTermGainsTaxRates from '../../taxRates/2025/capitalGains/longTerm.json';
-import { HomeHeader, BaseIncomeForm } from '../../src/components';
+import { HomeHeader } from '../../src/components';
 import { useLogTrades } from '../../src/hooks';
 import { createTrade } from '~/actions/createTrade';
 import { getTrades } from '~/loaders/getTrades';
+import { BaseIncomeForm } from '~/components/app/BaseIncomeForm';
 
 const incomeTaxRates = {
   federal: FederalIncomeTaxRates,
@@ -46,7 +47,7 @@ export default function Home() {
     <div>
       <HomeHeader />
       <fetcher.Form onSubmit={(event) => {}}>
-        {/* <BaseIncomeForm /> */}
+        <BaseIncomeForm />
         {
           trades.map((trade) => (
             <div>{trade.amount}</div>

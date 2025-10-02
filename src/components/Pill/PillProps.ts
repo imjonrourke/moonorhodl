@@ -1,4 +1,4 @@
-import { BaseProps } from '../../types/components';
+import { type BaseProps } from '../../types';
 
 export type PillVariant = 'default' | 'success' | 'error' | 'warning' | 'inform';
 

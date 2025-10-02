@@ -1,4 +1,4 @@
-import { type FunctionComponent } from 'react';
+import * as React from 'react';
 import { NumericFormat } from 'react-number-format';
 // import { Input } from '../../../../src/components';
 import { Input } from '~/components/ui/input';
@@ -7,7 +7,7 @@ import { useTradeForm } from '../../../../src/hooks';
 import { type TradeFormProps } from './TradeFormProps';
 import { DatePicker } from '~/components/app/DatePicker';
 
-export const TradeForm: FunctionComponent<TradeFormProps> = ({ type, assetType, id, name, quantity, amount, date }) => {
+export const TradeForm: React.FunctionComponent<TradeFormProps> = ({ type, assetType, id, name, quantity, amount, date }) => {
   const isBuy = type === 'buy';
   const isSell    = type === 'sell';
 

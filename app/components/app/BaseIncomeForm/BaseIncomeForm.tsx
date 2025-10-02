@@ -1,9 +1,9 @@
 import { type FunctionComponent } from 'react';
-import { Input, Select, type SelectItem } from '../../../../src/components'
+import { Input } from '~/components/ui/input';
 import type { BaseIncomeFormProps } from './BaseIncomeFormProps';
 import type { FilingStatus } from '../../../../src/types';
 
-const items: SelectItem[] = [
+const items = [
   {
     id: 'single' as FilingStatus,
     value: 'Single',
@@ -21,9 +21,8 @@ const items: SelectItem[] = [
 export const BaseIncomeForm: FunctionComponent<BaseIncomeFormProps> = () => {
   return (
     <div>
-      <Input type="number" name="income" id="income" label="Starting bag (Annual income)" value="0" />
-      <Select name="filingStatus" label="Filing status" items={items} onSelectItem={() => {}} selectedItem={items[0]} />
-      <Input type="text" name="location" id="location" label="Location" value="" />
+      <Input type="number" name="income" id="income" placeholder="Starting bag (Annual income)" value="0" />
+      <Input type="text" name="location" id="location" placeholder="Location" value="" />
     </div>
   );
 };
