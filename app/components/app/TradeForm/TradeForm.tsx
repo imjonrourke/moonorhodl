@@ -1,11 +1,11 @@
 import * as React from 'react';
-import { NumericFormat, removeNumericFormat, NumberFormatBase } from 'react-number-format';
+import { NumericFormat } from 'react-number-format';
 import { Input } from '~/components/ui/input';
 import { Button } from '~/components/ui/button';
 import { DatePicker } from '~/components/app/DatePicker';
+import { Label } from '~/components/ui/label';
 import { useTradeForm } from '../../../../src/hooks';
 import { type TradeFormProps } from './TradeFormProps';
-import { Label } from '~/components/ui/label';
 import { CreateTradeForm } from '../../../../src/forms/CreateTradeForm';
 
 export const TradeForm: React.FunctionComponent<TradeFormProps> = ({ type, assetType, id, name, quantity, amount, date, isEdit }) => {
