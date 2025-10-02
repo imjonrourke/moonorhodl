@@ -7,7 +7,7 @@ export const HomeHeader = () =>   {
       <h1><Emoji emoji="rocket" /> or <Emoji emoji="diamond" /><Emoji emoji="hands" /></h1>
       <p>
         Check the size of your <Emoji emoji="moneyBag" /> after getting rekt by
-        <Emoji emoji="flagUS" />
+        {" "}<Emoji emoji="flagUS" />
       </p>
       <p>Not financial advice.</p>
     </header>

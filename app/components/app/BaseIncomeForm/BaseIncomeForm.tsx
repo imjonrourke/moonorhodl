@@ -2,6 +2,8 @@ import { type FunctionComponent } from 'react';
 import { Input } from '~/components/ui/input';
 import type { BaseIncomeFormProps } from './BaseIncomeFormProps';
 import type { FilingStatus } from '../../../../src/types';
+import { NumericFormat } from 'react-number-format';
+import * as React from 'react';
 
 const items = [
   {
@@ -21,8 +23,8 @@ const items = [
 export const BaseIncomeForm: FunctionComponent<BaseIncomeFormProps> = () => {
   return (
     <div>
-      <Input type="number" name="income" id="income" placeholder="Starting bag (Annual income)" value="0" />
-      <Input type="text" name="location" id="location" placeholder="Location" value="" />
+      <NumericFormat id="quantity" name="quantity" prefix="$" customInput={Input} placeholder="Starting bag (Annual income)" thousandSeparator />
+      <Input type="text" name="location" id="location" placeholder="Location" />
     </div>
   );
 };
