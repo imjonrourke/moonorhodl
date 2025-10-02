@@ -4,18 +4,18 @@ import { type EmojiProps } from './EmojiProps';
 const computeEmoji: (val: EmojiProps['emoji']) => string = (val) => {
   switch (val) {
     case 'diamond':
-      return '&#57397;';
+      return '&#x1F48E;';
     case 'eagle':
-      return '&#129413;';
+      return '&#x1F985;';
     case 'hands':
-      return '&#58407;';
+      return '&#x1F64C;';
     case 'rocket':
       return '&#128640;';
     case 'moneyBag':
-      return '&#128640;';
+      return '&#x1f4b0;';
     case 'flagUS':
     default:
-      return '&#58636;';
+      return '&#x1f1fa;&#x1f1f8;';
   }
 };
 
@@ -23,6 +23,6 @@ export const Emoji: FunctionComponent<EmojiProps> = ({ emoji }) => {
   const emojiCode = computeEmoji(emoji);
 
   return (
-    <span>{emojiCode}</span>
+    <span dangerouslySetInnerHTML={{__html: emojiCode}} />
   );
 };
