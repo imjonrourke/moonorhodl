@@ -1,15 +1,17 @@
 import * as React from 'react';
-import { NumericFormat } from 'react-number-format';
-// import { Input } from '../../../../src/components';
+import { NumericFormat, removeNumericFormat, NumberFormatBase } from 'react-number-format';
 import { Input } from '~/components/ui/input';
-import { Button } from '../../../../src/components';
+import { Button } from '~/components/ui/button';
+import { DatePicker } from '~/components/app/DatePicker';
 import { useTradeForm } from '../../../../src/hooks';
 import { type TradeFormProps } from './TradeFormProps';
-import { DatePicker } from '~/components/app/DatePicker';
+import { Label } from '~/components/ui/label';
+import { CreateTradeForm } from '../../../../src/forms/CreateTradeForm';
 
 export const TradeForm: React.FunctionComponent<TradeFormProps> = ({ type, assetType, id, name, quantity, amount, date, isEdit }) => {
   const isBuy = type === 'buy';
-  const isSell    = type === 'sell';
+  const isSell = type === 'sell';
+  const isSwap = type === 'swap';
 
   const {
     hasId,
@@ -39,14 +41,39 @@ export const TradeForm: React.FunctionComponent<TradeFormProps> = ({ type, asset
   return (
     <div>
       <h3>{assetTypeTitle}</h3>
-      <Input name="name" placeholder="Name" type={nameType} value={nameValue} />
+      <Input name={CreateTradeForm.name} placeholder="Name" type={nameType} />
       {/* <Input name="quantity" placeholder="Quantity" type={quantityType} value={quantityValue} /> */}
-      <NumericFormat id="quantity" name="quantity" prefix="$" value={quantityValue} thousandSeparator />
+      <Label htmlFor={CreateTradeForm.quantity}>Quantity</Label>
+      <NumericFormat
+        id={CreateTradeForm.quantity}
+        name={CreateTradeForm.quantity}
+        customInput={Input}
+        value={quantityValue}
+        thousandSeparator
+      />
       {/* <Input name="amount" label="Amount" type={amountType} value={amountValue} /> */}
-      <NumericFormat id="amount" name="amount" prefix="$" value={amountValue} thousandSeparator />
-      <DatePicker name="date" id="date" />
+      <Label htmlFor={CreateTradeForm.amount}>Amount</Label>
+      <NumericFormat
+        id={CreateTradeForm.amount}
+        name={CreateTradeForm.amount}
+        customInput={Input}
+        value={amountValue}
+        thousandSeparator
+        decimalScale={2}
+      />
+      <DatePicker name={CreateTradeForm.date} id="date" />
       {/* <Input name="date" label="date" type={dateType} value={dateValue} /> */}
-      <Button size="large" variant="primary" type="submit" full />
+      <Button size="lg" variant="default" type="submit" full>
+        {
+          isBuy && `Add ${assetType} purchase`
+        }
+        {
+          isSell && `Add ${assetType} sale`
+        }
+        {
+          isSwap && `Add ${assetType} swap`
+        }
+      </Button>
     </div>
   );
 };

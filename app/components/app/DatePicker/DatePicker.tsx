@@ -20,7 +20,7 @@ export const DatePicker: FunctionComponent<DatePickerProps> = ({
 
   return (
     <div className="flex flex-col gap-3">
-      <input type="hidden" id={id} name={name} value={localDate?.toLocaleDateString()} />
+      <input type="hidden" name={name} value={localDate?.toLocaleDateString()} />
       <Label htmlFor={id} className="px-1">
         Date
       </Label>
@@ -32,6 +32,7 @@ export const DatePicker: FunctionComponent<DatePickerProps> = ({
             className="w-48 justify-between font-normal"
           >
             {localDate ? localDate.toLocaleDateString() : "Select date"}
+            {/* {"Select date"} */}
             <ChevronDownIcon />
           </Button>
         </PopoverTrigger>

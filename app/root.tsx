@@ -5,10 +5,20 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  useOutletContext,
+  useLoaderData,
 } from "react-router";
 
 import type { Route } from "./+types/root";
 import "./app.css";
+import type { Trade } from '../src/types';
+import { getTrades } from '~/loaders/getTrades';
+import { useState } from 'react';
+
+type ContextType = {
+  trades: Trade[];
+  addTrades: (trades: Trade[]) => void;
+};
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -22,6 +32,10 @@ export const links: Route.LinksFunction = () => [
     href: "https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap",
   },
 ];
+
+export async function clientLoader() {
+  return await getTrades();
+}
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -42,7 +56,17 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
-  return <Outlet />;
+  const { data } = useLoaderData<typeof clientLoader>();
+  const [trades, setTrades] = useState<Trade[]>(data?.trades || []);
+  const addTrades = (tradesArg: Trade[]) => {
+    setTrades(tradesArg);
+  }
+
+  return <Outlet context={{ trades, addTrades } satisfies ContextType} />;
+}
+
+export function useTradesContext() {
+  return useOutletContext<ContextType>();
 }
 
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {

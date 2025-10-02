@@ -1,26 +1,15 @@
+import { CreateTradeForm } from '../forms/CreateTradeForm';
 import type { ParseFormDataBase, Trade } from '../types';
 import { parseTradeType } from './parseTradeType';
 import { parseAssetType } from './parseAssetType';
 
-type CreateTradeFormData = {
-  id: string;
-  type: string;
-  assetType: string;
-  name: string;
-  quantity: string;
-  amount: string;
-  date: string;
-};
+const filterCurrencyChars = (val?: FormDataEntryValue | null) => {
+  if (!val) {
+    return 0;
+  }
 
-const CreateTradeForm: CreateTradeFormData = {
-  id: 'createTrade.id',
-  type: 'createTrade.type',
-  assetType: 'createTrade.assetType',
-  name: 'createTrade.name',
-  quantity: 'createTrade.quantity',
-  amount: 'createTrade.amount',
-  date: 'createTrade.date',
-}
+  return Number(`${val}`.replace(',', '')).valueOf();
+};
 
 export const tradeFormParser: ParseFormDataBase<Trade> = async (request) => {
   const formData = await request.formData();
@@ -35,7 +24,7 @@ export const tradeFormParser: ParseFormDataBase<Trade> = async (request) => {
 
   const name = `${fdName || ''}`;
   const quantity = parseInt(`${fdQuantity || 0}`);
-  const amount = parseInt(`${fdAmount || 0}`);
+  const amount = filterCurrencyChars(fdAmount);
   const date = new Date(`${fdDate || ''}`);
   const id = parseInt(`${fdId || 0}`);
 

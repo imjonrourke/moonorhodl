@@ -1,23 +1,15 @@
 import type { Route } from './+types/home';
-import { type ClientLoaderFunctionArgs, type ClientActionFunctionArgs, useFetcher } from 'react-router';
-import * as FederalIncomeTaxRates from '../../taxRates/2025/income/federal.json';
-import * as FederalLongTermGainsTaxRates from '../../taxRates/2025/capitalGains/longTerm.json';
-import { HomeHeader } from '../../src/components';
-import { useLogTrades } from '../../src/hooks';
+import { type ClientLoaderFunctionArgs, type ClientActionFunctionArgs, useFetcher, Form } from 'react-router';
 import { createTrade } from '~/actions/createTrade';
 import { getTrades } from '~/loaders/getTrades';
 import { BaseIncomeForm } from '~/components/app/BaseIncomeForm';
-
-const incomeTaxRates = {
-  federal: FederalIncomeTaxRates,
-  state: null,
-  city: null,
-};
-
-const gainsTaxRates = {
-  shortTerm: FederalIncomeTaxRates,
-  longTerm: FederalLongTermGainsTaxRates,
-};
+import { useHomeLoaderData } from '~/hooks/useHomeLoaderData/useHomeLoaderData';
+import { TradeForm } from '~/components/app/TradeForm';
+import { HomeHeader } from '../../src/components';
+import { useLogTrades } from '../../src/hooks';
+import type { SetTradesDataResult } from '../../src/utils/LocalStorage/LocalStorageProps';
+import { useState } from 'react';
+import { Button } from '~/components/ui/button';
 
 export async function clientLoader({ params, request, context }: ClientLoaderFunctionArgs) {
   return await getTrades();
@@ -35,10 +27,16 @@ export function meta({}: Route.MetaArgs) {
 }
 
 export default function Home() {
-  const fetcher = useFetcher();
+  const [toggleTrade, setToggleTrade] = useState(false);
+  const fetcher = useFetcher<SetTradesDataResult>({ key: 'home:income' });
+
+  const toggleTradeForm = () => {
+    setToggleTrade((currToggle) => !currToggle);
+  };
+
+  const { trades } = useHomeLoaderData({ trades: fetcher.data?.data?.trades });
 
   const {
-    trades,
     addTrade,
     removeTrade,
   } = useLogTrades();
@@ -46,14 +44,30 @@ export default function Home() {
   return (
     <div>
       <HomeHeader />
-      <fetcher.Form onSubmit={(event) => {}}>
+      <Form key="home:income" navigate={false}>
         <BaseIncomeForm />
-        {
-          trades.map((trade) => (
-            <div>{trade.amount}</div>
-          ))
-        }
-      </fetcher.Form>
+      </Form>
+      <Button
+        type="button"
+        variant="ghost"
+        size="default"
+        full
+        onClick={() => setToggleTrade((currToggle) => !currToggle)}
+      >
+        Add trade
+      </Button>
+      {
+        toggleTrade && (
+          <Form action="/trades/new" method="POST" key="home:trades" navigate={false} onSubmit={toggleTradeForm}>
+            <TradeForm type="buy" assetType="crypto" />
+          </Form>
+        )
+      }
+      {
+        trades.map((trade) => (
+          <TradeForm key={`trade.${trade.id}`} {...trade} />
+        ))
+      }
     </div>
   );
 }

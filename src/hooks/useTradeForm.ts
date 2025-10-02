@@ -30,9 +30,9 @@ export const useTradeForm: (props: UseTradeFormProps) => UseTradeFormResult = ({
   const dateType = date ? 'hidden' : 'date';
 
   const nameValue = name || '';
-  const quantityValue = `${quantity || ''}`;
-  const amountValue = `${amount || ''}`;
-  const dateValue = date?.toLocaleDateString() || '';
+  const quantityValue = `${quantity || '1'}`;
+  const amountValue = `${amount || '0'}`;
+  const dateValue = date ? new Date(date).toLocaleDateString() : '';
 
   let assetTypeTitle = '';
 
