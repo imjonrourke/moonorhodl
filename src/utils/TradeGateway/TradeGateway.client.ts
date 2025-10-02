@@ -1,11 +1,28 @@
 import { LocalStorage } from '../LocalStorage';
-import type { AddTradesHandler, RemoveTradeHandler, RemoveTradesHandler } from './TradeGatewayProps';
+import type {
+  AddTradeHandler,
+  AddTradesHandler,
+  RemoveTradeHandler,
+  RemoveTradesHandler,
+  TradeGatewayHandler
+} from './TradeGatewayProps';
+import type { GetTradesDataHandler } from '../LocalStorage/LocalStorageProps';
 
-export const TradeGateway = () => {
+export const TradeGateway: TradeGatewayHandler = () => {
   const localStorage = LocalStorage();
 
-  const addTrades: AddTradesHandler = async (props) => {
-    await localStorage.addTradesData(props);
+  const getTrades: GetTradesDataHandler = async () => {
+    return localStorage.getTradesData();
+  }
+
+  const addTrade: AddTradeHandler = async (args) => {
+    return localStorage.addTradesData({
+      trades: [args.trade],
+    });
+  };
+
+  const addTrades: AddTradesHandler = async (args) => {
+    return localStorage.addTradesData(args);
   };
 
   const removeTrade: RemoveTradeHandler = async (tradeId: number) => {
@@ -41,5 +58,13 @@ export const TradeGateway = () => {
     }
 
     return localStorage.getTradesData();
+  };
+
+  return {
+    getTrades,
+    addTrade,
+    addTrades,
+    removeTrade,
+    removeTrades
   };
 };

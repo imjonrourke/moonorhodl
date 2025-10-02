@@ -18,7 +18,7 @@ type UseTradeFormResult = {
   quantityValue: string;
   amountType: 'hidden' | 'number';
   amountValue: string;
-  dateType: 'hidden' | 'text';
+  dateType: 'hidden' | 'date';
   dateValue: string;
 };
 
@@ -27,7 +27,7 @@ export const useTradeForm: (props: UseTradeFormProps) => UseTradeFormResult = ({
   const nameType = name ? 'hidden' : 'text';
   const quantityType = quantity ? 'hidden' : 'number';
   const amountType = amount ? 'hidden' : 'number';
-  const dateType = date ? 'hidden' : 'text';
+  const dateType = date ? 'hidden' : 'date';
 
   const nameValue = name || '';
   const quantityValue = `${quantity || ''}`;

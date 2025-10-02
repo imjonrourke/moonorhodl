@@ -1,5 +1,5 @@
-import { FunctionComponent } from 'react';
-import { ButtonProps, ButtonVariant, ButtonSize } from './ButtonProps';
+import type { FunctionComponent } from 'react';
+import type { ButtonProps, ButtonVariant, ButtonSize } from './ButtonProps';
 import { classNames } from '../../utils';
 
 const ButtonSizeClasses: Record<ButtonSize, string> = {

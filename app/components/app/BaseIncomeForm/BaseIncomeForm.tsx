@@ -1,4 +1,4 @@
-import type { FunctionComponent } from 'react';
+import { type FunctionComponent } from 'react';
 import { Input, Select, type SelectItem } from '../../../../src/components'
 import type { BaseIncomeFormProps } from './BaseIncomeFormProps';
 import type { FilingStatus } from '../../../../src/types';

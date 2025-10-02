@@ -1,5 +1,5 @@
-import { MouseEventHandler } from 'react';
-import { BaseProps } from '../../types';
+import type { MouseEventHandler } from 'react';
+import type { BaseProps } from '../../types';
 
 export type ButtonSize = 'small' | 'medium' | 'large';
 export type ButtonVariant = 'section' | 'primary' | 'secondary' | 'link' | 'empty' | 'error';

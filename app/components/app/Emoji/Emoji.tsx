@@ -1,5 +1,5 @@
-import type { FunctionComponent } from 'react';
-import type { EmojiProps } from './EmojiProps';
+import { type FunctionComponent } from 'react';
+import { type EmojiProps } from './EmojiProps';
 
 const computeEmoji: (val: EmojiProps['emoji']) => string = (val) => {
   switch (val) {

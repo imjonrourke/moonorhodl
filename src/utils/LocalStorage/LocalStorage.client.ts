@@ -57,6 +57,11 @@ export const LocalStorage: LocalStorageHandler = () => {
   };
 
     setTradesData(newTrades);
+
+    return {
+      data: newTrades,
+      error: null,
+    };
   };
 
   const removeTradeData: RemoveTradeDataHandler = async (tradeId: number) => {

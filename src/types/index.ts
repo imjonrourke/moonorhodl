@@ -1,4 +1,5 @@
 export * from './BaseProps';
+export * from './FormData';
 export * from './api';
 
 export type FilingStatus = 'single' | 'marriedJointly' | 'marriedSeparately' | 'headOfHousehold';
@@ -18,10 +19,11 @@ export type TaxTypeResult = Record<TaxType, TaxBracketLimit[]>;
 export type Trade = {
   type: TradeType;
   id: number;
+  assetType: AssetType;
   name: string;
   amount: number;
   quantity: number;
-  date: string;
+  date: Date;
 };
 
 export type NewTrade = Omit<Trade, 'id'>;

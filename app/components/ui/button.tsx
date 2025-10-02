@@ -39,17 +39,18 @@ function Button({
   variant,
   size,
   asChild = false,
+  full = false,
   ...props
 }: React.ComponentProps<"button"> &
   VariantProps<typeof buttonVariants> & {
     asChild?: boolean
-  }) {
+  } & { full?: boolean }) {
   const Comp = asChild ? Slot : "button"
 
   return (
     <Comp
       data-slot="button"
-      className={cn(buttonVariants({ variant, size, className }))}
+      className={cn(buttonVariants({ variant, size, className }), full && "w-full")}
       {...props}
     />
   )

@@ -1,5 +1,5 @@
-import { FunctionComponent } from 'react';
-import { PillProps, PillVariant } from './PillProps';
+import { type FunctionComponent } from 'react';
+import { type PillProps, type PillVariant } from './PillProps';
 
 type PillVariants = { [K in PillVariant]: string };
 

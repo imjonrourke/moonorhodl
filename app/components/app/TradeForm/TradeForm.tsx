@@ -1,8 +1,11 @@
-import { Input } from '../../../../src/components/Input';
-import { Button } from '../../../../src/components/Button';
-import type { FunctionComponent } from 'react';
-import type { TradeFormProps } from './TradeFormProps';
+import { type FunctionComponent } from 'react';
+import { NumericFormat } from 'react-number-format';
+// import { Input } from '../../../../src/components';
+import { Input } from '~/components/ui/input';
+import { Button } from '../../../../src/components';
 import { useTradeForm } from '../../../../src/hooks';
+import { type TradeFormProps } from './TradeFormProps';
+import { DatePicker } from '~/components/app/DatePicker';
 
 export const TradeForm: FunctionComponent<TradeFormProps> = ({ type, assetType, id, name, quantity, amount, date }) => {
   const isBuy = type === 'buy';
@@ -29,10 +32,13 @@ export const TradeForm: FunctionComponent<TradeFormProps> = ({ type, assetType, 
           <input type="hidden" name="id" value={id} />
         )
       }
-      <Input name="name" label="Name" type={nameType} value={nameValue} />
-      <Input name="quantity" label="Quantity" type={quantityType} value={quantityValue} />
-      <Input name="amount" label="Amount" type={amountType} value={amountValue} />
-      <Input name="date" label="date" type={dateType} value={dateValue} />
+      <Input name="name" placeholder="Name" type={nameType} value={nameValue} />
+      <Input name="quantity" placeholder="Quantity" type={quantityType} value={quantityValue} />
+      <NumericFormat id="quantity" name="quantity" prefix="$" value={amountValue} thousandSeparator />
+      {/* <Input name="amount" label="Amount" type={amountType} value={amountValue} /> */}
+      <NumericFormat id="amount" name="amount" prefix="$" value={amountValue} thousandSeparator />
+      <DatePicker name="date" id="date" />
+      {/* <Input name="date" label="date" type={dateType} value={dateValue} /> */}
       <Button size="large" variant="primary" type="submit" full />
     </div>
   );

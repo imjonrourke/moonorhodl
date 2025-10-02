@@ -1,4 +1,4 @@
-import { FunctionComponent } from 'react';
+import { type FunctionComponent } from 'react';
 
 export const Textarea: FunctionComponent<Partial<HTMLTextAreaElement> & { label: string,  hideLabel?: boolean; placeholder?: boolean; error?: string; }> = ({ label, hideLabel, rows = 4, name, id, value = '', error, className }) => {
   return (
