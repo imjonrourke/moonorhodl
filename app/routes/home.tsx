@@ -6,10 +6,9 @@ import { BaseIncomeForm } from '~/components/app/BaseIncomeForm';
 import { useHomeLoaderData } from '~/hooks/useHomeLoaderData/useHomeLoaderData';
 import { TradeForm } from '~/components/app/TradeForm';
 import { HomeHeader } from '../../src/components';
-import { useLogTrades } from '../../src/hooks';
 import type { SetTradesDataResult } from '../../src/utils/LocalStorage/LocalStorageProps';
-import { useState } from 'react';
 import { Button } from '~/components/ui/button';
+import { useToggle } from '../../src/hooks/useToggle';
 
 export async function clientLoader({ params, request, context }: ClientLoaderFunctionArgs) {
   return await getTrades();
@@ -27,19 +26,10 @@ export function meta({}: Route.MetaArgs) {
 }
 
 export default function Home() {
-  const [toggleTrade, setToggleTrade] = useState(false);
   const fetcher = useFetcher<SetTradesDataResult>({ key: 'home:income' });
-
-  const toggleTradeForm = () => {
-    setToggleTrade((currToggle) => !currToggle);
-  };
+  const { toggle, toggleHandler } = useToggle();
 
   const { trades } = useHomeLoaderData({ trades: fetcher.data?.data?.trades });
-
-  const {
-    addTrade,
-    removeTrade,
-  } = useLogTrades();
 
   return (
     <div>
@@ -52,13 +42,13 @@ export default function Home() {
         variant="ghost"
         size="default"
         full
-        onClick={() => setToggleTrade((currToggle) => !currToggle)}
+        onClick={toggleHandler}
       >
         Add trade
       </Button>
       {
-        toggleTrade && (
-          <Form action="/trades/new" method="POST" key="home:trades" navigate={false} onSubmit={toggleTradeForm}>
+        toggle && (
+          <Form action="/trades/new" method="POST" key="home:trades" navigate={false} onSubmit={toggleHandler}>
             <TradeForm type="buy" assetType="crypto" />
           </Form>
         )
