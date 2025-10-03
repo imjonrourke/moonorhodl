@@ -10,8 +10,6 @@ export const createTrade = async ({ request }: ClientActionFunctionArgs): Create
 
   const tradeForm = await tradeFormParser(request);
 
-  console.log('tradeFormData', tradeForm);
-
   // TODO: validate tradeForm
   const { data, error } = await tradeGateway.addTrade({
     trade: tradeForm,

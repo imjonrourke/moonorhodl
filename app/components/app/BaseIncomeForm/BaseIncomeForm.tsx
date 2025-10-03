@@ -4,6 +4,7 @@ import type { BaseIncomeFormProps } from './BaseIncomeFormProps';
 import type { FilingStatus } from '../../../../src/types';
 import { NumericFormat } from 'react-number-format';
 import * as React from 'react';
+import { Form } from 'react-router';
 
 const items = [
   {
@@ -20,11 +21,15 @@ const items = [
   },
 ];
 
+const actionUrls = {
+  new: '/income/new',
+}
+
 export const BaseIncomeForm: FunctionComponent<BaseIncomeFormProps> = () => {
   return (
-    <div>
+    <Form action={actionUrls.new} key="home:income" navigate={false}>
       <NumericFormat id="quantity" name="quantity" prefix="$" customInput={Input} placeholder="Starting bag (Annual income)" thousandSeparator />
       <Input type="text" name="location" id="location" placeholder="Location" />
-    </div>
+    </Form>
   );
 };

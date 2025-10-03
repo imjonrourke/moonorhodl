@@ -1,6 +1,5 @@
 import { type FunctionComponent, useState } from 'react';
 import { Form } from 'react-router';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '~/components/ui/tabs';
 import { TradeFormBase } from '~/components/app/TradeFormBase';
 import type { TradeFormProps } from '~/components/app/TradeForm/TradeFormProps';
 import { RadioGroup, RadioGroupItem } from '~/components/ui/radio-group';
@@ -58,24 +57,6 @@ export const TradeForm: FunctionComponent<TradeFormProps> = ({ type, onSubmit })
           <TradeFormBase type={type} assetType={assetType} />
         </div>
       </Form>
-      {/* <Tabs defaultValue="crypto"> */}
-      {/*   <TabsList> */}
-      {/*     { */}
-      {/*       Object.keys(AssetTypeTitles).map((assetType) => ( */}
-      {/*         <TabsTrigger key={assetType} value={assetType}>{AssetTypeTitles[assetType]}</TabsTrigger> */}
-      {/*       )) */}
-      {/*     } */}
-      {/*   </TabsList> */}
-      {/*   <TabsContent value="crypto"> */}
-      {/*     <TradeFormBase type={type} assetType="crypto" /> */}
-      {/*   </TabsContent> */}
-      {/*   <TabsContent value="stock"> */}
-      {/*     <TradeFormBase type={type} assetType="stock" /> */}
-      {/*   </TabsContent> */}
-      {/*   <TabsContent value="forex"> */}
-      {/*     <TradeFormBase type={type} assetType="forex" /> */}
-      {/*   </TabsContent> */}
-      {/* </Tabs> */}
     </div>
   );
 };

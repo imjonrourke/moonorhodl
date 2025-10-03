@@ -1,5 +1,5 @@
 import type { Route } from './+types/home';
-import { type ClientLoaderFunctionArgs, type ClientActionFunctionArgs, useFetcher, Form } from 'react-router';
+import { type ClientActionFunctionArgs, useFetcher, Form } from 'react-router';
 import { createTrade } from '~/actions/createTrade';
 import { getTrades } from '~/loaders/getTrades';
 import { BaseIncomeForm } from '~/components/app/BaseIncomeForm';
@@ -11,7 +11,7 @@ import { Button } from '~/components/ui/button';
 import { useToggle } from '../../src/hooks/useToggle';
 import { TradeForm } from '~/components/app/TradeForm/TradeForm';
 
-export async function clientLoader({ params, request, context }: ClientLoaderFunctionArgs) {
+export async function clientLoader() {
   return await getTrades();
 }
 
@@ -35,9 +35,7 @@ export default function Home() {
   return (
     <div>
       <HomeHeader />
-      <Form key="home:income" navigate={false}>
-        <BaseIncomeForm />
-      </Form>
+      <BaseIncomeForm />
       <Button
         type="button"
         variant="ghost"
@@ -49,16 +47,8 @@ export default function Home() {
       </Button>
       {
         toggle && (
-          <Form action="/trades/new" method="POST" key="home:trades" navigate={false} onSubmit={toggleHandler}>
-            <TradeFormBase type="buy" assetType="crypto" />
-          </Form>
+          <TradeForm type="buy" onSubmit={toggleHandler} />
         )
-      }
-      <TradeForm type="buy" onSubmit={toggleHandler} />
-      {
-        trades.map((trade) => (
-          <TradeFormBase key={`trade.${trade.id}`} {...trade} />
-        ))
       }
     </div>
   );

@@ -6,7 +6,7 @@ import {
   type GetTradesDataHandler,
   type RemoveTradesDataHandler,
   type RemoveTradeDataHandler,
-  type LocalStorageHandler, type SetTradesDataProps,
+  type LocalStorageHandler, type SetTradesDataProps, type AddTradesDataHandler,
 } from './LocalStorageProps';
 import type { ErrorResponse } from '../../types';
 
@@ -43,7 +43,7 @@ export const LocalStorage: LocalStorageHandler = () => {
     window.localStorage.setItem(TRADES_LIST, JSON.stringify(props));
   };
 
-  const addTradesData: SetTradesDataHandler = async ({ trades }) => {
+  const addTradesData: AddTradesDataHandler = async ({ trades }) => {
     const { data } = await getTradesData();
 
     const tradesWithIds = trades.map((trade, index) => ({
