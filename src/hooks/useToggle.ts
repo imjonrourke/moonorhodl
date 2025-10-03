@@ -6,6 +6,8 @@ export const useToggle = () => {
     setToggle((currToggle) => !currToggle);
   };
 
+  console.log('useToggle toggle', toggle);
+
   return {
     toggle,
     toggleHandler,

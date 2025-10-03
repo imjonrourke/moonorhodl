@@ -4,11 +4,12 @@ import { createTrade } from '~/actions/createTrade';
 import { getTrades } from '~/loaders/getTrades';
 import { BaseIncomeForm } from '~/components/app/BaseIncomeForm';
 import { useHomeLoaderData } from '~/hooks/useHomeLoaderData/useHomeLoaderData';
-import { TradeForm } from '~/components/app/TradeForm';
+import { TradeFormBase } from '~/components/app/TradeFormBase';
 import { HomeHeader } from '../../src/components';
 import type { SetTradesDataResult } from '../../src/utils/LocalStorage/LocalStorageProps';
 import { Button } from '~/components/ui/button';
 import { useToggle } from '../../src/hooks/useToggle';
+import { TradeForm } from '~/components/app/TradeForm/TradeForm';
 
 export async function clientLoader({ params, request, context }: ClientLoaderFunctionArgs) {
   return await getTrades();
@@ -49,13 +50,14 @@ export default function Home() {
       {
         toggle && (
           <Form action="/trades/new" method="POST" key="home:trades" navigate={false} onSubmit={toggleHandler}>
-            <TradeForm type="buy" assetType="crypto" />
+            <TradeFormBase type="buy" assetType="crypto" />
           </Form>
         )
       }
+      <TradeForm type="buy" onSubmit={toggleHandler} />
       {
         trades.map((trade) => (
-          <TradeForm key={`trade.${trade.id}`} {...trade} />
+          <TradeFormBase key={`trade.${trade.id}`} {...trade} />
         ))
       }
     </div>

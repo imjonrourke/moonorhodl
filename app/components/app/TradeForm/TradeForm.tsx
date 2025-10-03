@@ -1,79 +1,81 @@
-import * as React from 'react';
-import { NumericFormat } from 'react-number-format';
-import { Input } from '~/components/ui/input';
-import { Button } from '~/components/ui/button';
-import { DatePicker } from '~/components/app/DatePicker';
+import { type FunctionComponent, useState } from 'react';
+import { Form } from 'react-router';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '~/components/ui/tabs';
+import { TradeFormBase } from '~/components/app/TradeFormBase';
+import type { TradeFormProps } from '~/components/app/TradeForm/TradeFormProps';
+import { RadioGroup, RadioGroupItem } from '~/components/ui/radio-group';
 import { Label } from '~/components/ui/label';
-import { useTradeForm } from '../../../../src/hooks';
-import { type TradeFormProps } from './TradeFormProps';
-import { CreateTradeForm } from '../../../../src/forms/CreateTradeForm';
+import { AssetTypeTitles } from '../../../../src/utils/constants';
+import type { AssetType, TradeType } from '../../../../src/types';
+import { cn } from '~/lib/utils';
 
-export const TradeForm: React.FunctionComponent<TradeFormProps> = ({ type, assetType, id, name, quantity, amount, date, isEdit }) => {
-  const isBuy = type === 'buy';
-  const isSell = type === 'sell';
-  const isSwap = type === 'swap';
+const actionUrls: Record<TradeType, string> = {
+  buy: '/trades/new',
+  sell: '/trades/sell',
+  swap: '/trades/swap',
+}
 
-  const {
-    hasId,
-    assetTypeTitle,
-    nameType,
-    nameValue,
-    quantityType,
-    quantityValue,
-    amountType,
-    amountValue,
-    dateType,
-    dateValue,
-  } = useTradeForm({ id, assetType, name, quantity, amount, date });
+const labelStyles = "border-blue-500 text-blue-500"
 
-  if (hasId && !isEdit) {
-    return (
-      <>
-        <input type="hidden" name="id" value={id} />
-        <input type="hidden" name="name" value={nameValue} />
-        <input type="hidden" name="quantity" value={quantityValue} />
-        <input type="hidden" name="amount" value={amountValue} />
-        <input type="hidden" name="date" value={dateValue} />
-      </>
-    );
-  }
+export const TradeForm: FunctionComponent<TradeFormProps> = ({ type, onSubmit }) => {
+  const [assetType, setAssetType] = useState<AssetType>(AssetTypeTitles.crypto.value);
+
+  const handleAssetType = (value: AssetType) => {
+    return setAssetType(AssetTypeTitles[value].value);
+  };
 
   return (
     <div>
-      <h3>{assetTypeTitle}</h3>
-      <Input name={CreateTradeForm.name} placeholder="Name" type={nameType} />
-      {/* <Input name="quantity" placeholder="Quantity" type={quantityType} value={quantityValue} /> */}
-      <Label htmlFor={CreateTradeForm.quantity}>Quantity</Label>
-      <NumericFormat
-        id={CreateTradeForm.quantity}
-        name={CreateTradeForm.quantity}
-        customInput={Input}
-        value={quantityValue}
-        thousandSeparator
-      />
-      {/* <Input name="amount" label="Amount" type={amountType} value={amountValue} /> */}
-      <Label htmlFor={CreateTradeForm.amount}>Amount</Label>
-      <NumericFormat
-        id={CreateTradeForm.amount}
-        name={CreateTradeForm.amount}
-        customInput={Input}
-        value={amountValue}
-        thousandSeparator
-        decimalScale={2}
-      />
-      <DatePicker name={CreateTradeForm.date} id="date" />
-      {/* <Input name="date" label="date" type={dateType} value={dateValue} /> */}
-      <Button size="lg" variant="default" type="submit" full>
-        {
-          isBuy && `Add ${assetType} purchase`
-        }
-        {
-          isSell && `Add ${assetType} sale`
-        }
-        {
-          isSwap && `Add ${assetType} swap`
-        }
-      </Button>
+      <Form action={actionUrls[type]} method="POST" key="home:trades" navigate={false} onSubmit={onSubmit}>
+        <input type="hidden" value={assetType} />
+        <RadioGroup
+          name="assetType"
+          defaultValue={AssetTypeTitles.crypto.value}
+          orientation="horizontal"
+          className="flex justify-center align-middle"
+          onValueChange={handleAssetType}
+        >
+          {
+            Object.keys(AssetTypeTitles).map((assetTypeTitle) => (
+              <div className="flex items-center gap-3">
+                <RadioGroupItem id={assetTypeTitle} value={assetTypeTitle} className="peer" hidden />
+                <Label
+                  htmlFor={assetTypeTitle}
+                  className={
+                    cn(
+                      'rounded-lg border-1 p-2 border-transparent',
+                      assetType === assetTypeTitle && labelStyles,
+                    )
+                  }
+                >
+                  {AssetTypeTitles[assetTypeTitle as AssetType].label}
+                </Label>
+              </div>
+            ))
+          }
+        </RadioGroup>
+        <div>
+          <TradeFormBase type={type} assetType={assetType} />
+        </div>
+      </Form>
+      {/* <Tabs defaultValue="crypto"> */}
+      {/*   <TabsList> */}
+      {/*     { */}
+      {/*       Object.keys(AssetTypeTitles).map((assetType) => ( */}
+      {/*         <TabsTrigger key={assetType} value={assetType}>{AssetTypeTitles[assetType]}</TabsTrigger> */}
+      {/*       )) */}
+      {/*     } */}
+      {/*   </TabsList> */}
+      {/*   <TabsContent value="crypto"> */}
+      {/*     <TradeFormBase type={type} assetType="crypto" /> */}
+      {/*   </TabsContent> */}
+      {/*   <TabsContent value="stock"> */}
+      {/*     <TradeFormBase type={type} assetType="stock" /> */}
+      {/*   </TabsContent> */}
+      {/*   <TabsContent value="forex"> */}
+      {/*     <TradeFormBase type={type} assetType="forex" /> */}
+      {/*   </TabsContent> */}
+      {/* </Tabs> */}
     </div>
   );
 };
