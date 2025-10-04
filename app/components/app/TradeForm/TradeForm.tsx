@@ -4,7 +4,7 @@ import { TradeFormBase } from '~/components/app/TradeFormBase';
 import type { TradeFormProps } from '~/components/app/TradeForm/TradeFormProps';
 import { RadioGroup, RadioGroupItem } from '~/components/ui/radio-group';
 import { Label } from '~/components/ui/label';
-import { AssetTypeTitles } from '../../../../src/utils/constants';
+import { AssetTypeTitles, FormKeys } from '../../../../src/utils/constants';
 import type { AssetType, TradeType } from '../../../../src/types';
 import { cn } from '~/lib/utils';
 
@@ -25,7 +25,7 @@ export const TradeForm: FunctionComponent<TradeFormProps> = ({ type, onSubmit })
 
   return (
     <div>
-      <Form action={actionUrls[type]} method="POST" key="home:trades" navigate={false} onSubmit={onSubmit}>
+      <Form action={actionUrls[type]} method="POST" key={FormKeys.homeTrades} navigate={false} onSubmit={onSubmit}>
         <input type="hidden" value={assetType} />
         <RadioGroup
           name="assetType"

@@ -14,9 +14,9 @@ type CalculateIncomeTaxResult = {
   city: number;
 };
 
-type CalculateIncomeTaxHandler = (calculateIncomeTaxArgs: CalculateIncomeTax) => Promise<CalculateIncomeTaxResult>;
+type CalculateIncomeTaxHandler = (calculateIncomeTaxArgs: CalculateIncomeTax) => CalculateIncomeTaxResult;
 
-export const calculateIncomeTax: CalculateIncomeTaxHandler = async ({ income, filingStatus }) => {
+export const calculateIncomeTax: CalculateIncomeTaxHandler = ({ income, filingStatus }) => {
   const federalTaxLimits = calculateTaxAmount(income, 0, FederalIncomeTaxRates[filingStatus]);
   const federal = federalTaxLimits.reduce((acc, currentValue) => {
     return acc + currentValue.taxes;

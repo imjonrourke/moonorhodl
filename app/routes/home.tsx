@@ -4,15 +4,29 @@ import { createTrade } from '~/actions/createTrade';
 import { getTrades } from '~/loaders/getTrades';
 import { BaseIncomeForm } from '~/components/app/BaseIncomeForm';
 import { useHomeLoaderData } from '~/hooks/useHomeLoaderData/useHomeLoaderData';
-import { TradeFormBase } from '~/components/app/TradeFormBase';
+import { Button } from '~/components/ui/button';
+import { TradeForm } from '~/components/app/TradeForm/TradeForm';
+import { IncomeTaxAmounts } from '~/components/app/IncomeTaxAmounts';
+import { TradeItem } from '~/components/app/TradeItem';
+import { FormKeys } from '../../src/utils/constants';
+import { getIncome } from '~/loaders/getIncome';
 import { HomeHeader } from '../../src/components';
 import type { SetTradesDataResult } from '../../src/utils/LocalStorage/LocalStorageProps';
-import { Button } from '~/components/ui/button';
 import { useToggle } from '../../src/hooks/useToggle';
-import { TradeForm } from '~/components/app/TradeForm/TradeForm';
+import type { FilingStatus } from '../../src/types';
 
 export async function clientLoader() {
-  return await getTrades();
+  console.log('home clientLoader');
+  const { data: tradesData, error } = await getTrades();
+  console.log('home clientLoader getTrades', tradesData);
+  const { data: incomeData, error: incomeError } = await getIncome();
+
+  return {
+    data: {
+      trades: tradesData,
+      income: incomeData,
+    }
+  };
 }
 
 export async function clientAction(args:  ClientActionFunctionArgs) {
@@ -27,15 +41,25 @@ export function meta({}: Route.MetaArgs) {
 }
 
 export default function Home() {
-  const fetcher = useFetcher<SetTradesDataResult>({ key: 'home:income' });
+  const incomeFetcher = useFetcher<SetTradesDataResult>({ key: FormKeys.homeIncome });
+  const tradesFetcher = useFetcher<SetTradesDataResult>({ key: FormKeys.homeTrades });
   const { toggle, toggleHandler } = useToggle();
 
-  const { trades } = useHomeLoaderData({ trades: fetcher.data?.data?.trades });
+  const { trades, income } = useHomeLoaderData({ trades: tradesFetcher.data?.data?.trades });
+
+  const incomeInfo = income?.income;
+  const filingStatusInfo = income?.filingStatus;
+  const hasTaxDetails = !!incomeInfo && !!filingStatusInfo;
 
   return (
     <div>
       <HomeHeader />
       <BaseIncomeForm />
+      {
+        hasTaxDetails && (
+          <IncomeTaxAmounts income={Number(income?.income)} filingStatus={income?.filingStatus as FilingStatus} />
+        )
+      }
       <Button
         type="button"
         variant="ghost"
@@ -49,6 +73,9 @@ export default function Home() {
         toggle && (
           <TradeForm type="buy" onSubmit={toggleHandler} />
         )
+      }
+      {
+        trades?.map((trade) => <TradeItem key={trade.id} trade={trade} />)
       }
     </div>
   );

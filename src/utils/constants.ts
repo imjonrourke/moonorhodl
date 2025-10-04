@@ -24,3 +24,7 @@ export const AssetTypeTitles: Record<AssetType, AssetTypeTitle> = {
   },
 };
 
+export const FormKeys = {
+  homeIncome: 'home:income',
+  homeTrades: 'home:trades',
+};

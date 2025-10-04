@@ -2,14 +2,7 @@ import { CreateTradeForm } from '../forms/CreateTradeForm';
 import type { ParseFormDataBase, Trade } from '../types';
 import { parseTradeType } from './parseTradeType';
 import { parseAssetType } from './parseAssetType';
-
-const filterCurrencyChars = (val?: FormDataEntryValue | null) => {
-  if (!val) {
-    return 0;
-  }
-
-  return Number(`${val}`.replace(',', '')).valueOf();
-};
+import { filterCurrencyChars } from '../helpers';
 
 export const tradeFormParser: ParseFormDataBase<Trade> = async (request) => {
   const formData = await request.formData();

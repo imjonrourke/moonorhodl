@@ -142,6 +142,8 @@ export const LocalStorage: LocalStorageHandler = () => {
           });
         }
       }
+
+      resolve({ data,  error: null });
     });
   };
 
