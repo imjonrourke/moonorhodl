@@ -17,12 +17,14 @@ type CalculateIncomeTaxResult = {
 type CalculateIncomeTaxHandler = (calculateIncomeTaxArgs: CalculateIncomeTax) => CalculateIncomeTaxResult;
 
 export const calculateIncomeTax: CalculateIncomeTaxHandler = ({ income, filingStatus }) => {
-  const federalTaxLimits = calculateTaxAmount(income, 0, FederalIncomeTaxRates[filingStatus]);
+  const taxableIncome = income <= FederalIncomeTaxRates[filingStatus].standardDeduction ? 0 : income - FederalIncomeTaxRates[filingStatus].standardDeduction
+  const federalTaxLimits = calculateTaxAmount(taxableIncome, 0, FederalIncomeTaxRates[filingStatus].rates);
+
   const federal = federalTaxLimits.reduce((acc, currentValue) => {
     return acc + currentValue.taxes;
   }, 0);
 
-  const effectiveTaxRate = federal / income;
+  const effectiveTaxRate = (federal / taxableIncome) * 100;
 
   return {
     federal,

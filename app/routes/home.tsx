@@ -16,9 +16,7 @@ import { useToggle } from '../../src/hooks/useToggle';
 import type { FilingStatus } from '../../src/types';
 
 export async function clientLoader() {
-  console.log('home clientLoader');
   const { data: tradesData, error } = await getTrades();
-  console.log('home clientLoader getTrades', tradesData);
   const { data: incomeData, error: incomeError } = await getIncome();
 
   return {

@@ -8,7 +8,7 @@ export const IncomeTaxAmounts: FunctionComponent<IncomeTaxAmountsProps> = ({ inc
   return (
     <div>
       <p>Federal income tax: ${federal}</p>
-      <p>Effective tax rate: ${effectiveTaxRate}</p>
+      <p>Effective tax rate: {effectiveTaxRate.toFixed(2)}%</p>
     </div>
   );
 };
