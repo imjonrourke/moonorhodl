@@ -26,7 +26,6 @@ export const TradeForm: FunctionComponent<TradeFormProps> = ({ type, onSubmit })
   return (
     <div>
       <Form action={actionUrls[type]} method="POST" key={FormKeys.homeTrades} navigate={false} onSubmit={onSubmit}>
-        <input type="hidden" value={assetType} />
         <RadioGroup
           name="assetType"
           defaultValue={AssetTypeTitles.crypto.value}

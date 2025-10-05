@@ -37,6 +37,7 @@ export const TradeFormBase: React.FunctionComponent<TradeFormBaseProps> = ({ typ
   return (
     <div>
       <h3>{assetTypeTitle}</h3>
+      <input type="hidden" id={CreateTradeForm.assetType} name={CreateTradeForm.assetType} value={assetType} />
       <Label htmlFor={CreateTradeForm.name}>Name</Label>
       <Input id={CreateTradeForm.name} name={CreateTradeForm.name} placeholder="Name" type="text" />
       <Label htmlFor={CreateTradeForm.quantity}>Quantity</Label>

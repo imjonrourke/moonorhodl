@@ -3,5 +3,5 @@ export const filterCurrencyChars = (val?: FormDataEntryValue | null) => {
     return 0;
   }
 
-  return Number(`${val}`.replace(',', '')).valueOf();
+  return Number(`${val}`.replace(',', '')).toPrecision(2).valueOf();
 };
