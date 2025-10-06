@@ -52,10 +52,10 @@ export default function Home() {
   return (
     <div>
       <HomeHeader />
-      <BaseIncomeForm />
+      <BaseIncomeForm income={income?.income} filingStatus={income?.filingStatus} />
       {
         hasTaxDetails && (
-          <IncomeTaxAmounts income={Number(income?.income)} filingStatus={income?.filingStatus as FilingStatus} />
+          <IncomeTaxAmounts income={income?.income} filingStatus={income?.filingStatus as FilingStatus} />
         )
       }
       <Button
@@ -83,24 +83,8 @@ export default function Home() {
 - initial purchase
 - conversion (or sale) price
 
-- single
-- married jointly
-- married separately
-
 - federal
 - state
 - city
-
-type FilingStatus = 'single' | 'marriedJointly' | 'marriedSeparately';
-
-const shortTermLimits: Record<FilingStatus, number[]> = {
-  single: [],
-};
-
-const longTermLimits = [
-  {},
-]
-
-- 100,000 =
 
 */
