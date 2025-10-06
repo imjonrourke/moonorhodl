@@ -24,7 +24,7 @@ export const calculateIncomeTax: CalculateIncomeTaxHandler = ({ income, filingSt
     return acc + currentValue.taxes;
   }, 0);
 
-  const effectiveTaxRate = (federal / taxableIncome) * 100;
+  const effectiveTaxRate = ((federal / taxableIncome) * 100).toFixed(2);
 
   return {
     federal,

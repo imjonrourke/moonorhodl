@@ -3,5 +3,7 @@ export const filterCurrencyChars = (val?: FormDataEntryValue | null) => {
     return 0;
   }
 
-  return Number(`${val}`.replace(',', '')).toPrecision(2).valueOf();
+  const filteredVal = `${val}`.split('').filter((fval) => fval !== ',').join('');
+
+  return Number(filteredVal).toPrecision(2).valueOf();
 };

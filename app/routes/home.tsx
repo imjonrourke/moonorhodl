@@ -50,31 +50,35 @@ export default function Home() {
   const hasTaxDetails = !!incomeInfo && !!filingStatusInfo;
 
   return (
-    <div>
-      <HomeHeader />
-      <BaseIncomeForm income={income?.income} filingStatus={income?.filingStatus} />
-      {
-        hasTaxDetails && (
-          <IncomeTaxAmounts income={income?.income} filingStatus={income?.filingStatus as FilingStatus} />
-        )
-      }
-      <Button
-        type="button"
-        variant="ghost"
-        size="default"
-        full
-        onClick={toggleHandler}
-      >
-        Add trade
-      </Button>
-      {
-        toggle && (
-          <TradeForm type="buy" onSubmit={toggleHandler} />
-        )
-      }
-      {
-        trades?.map((trade) => <TradeItem key={trade.id} trade={trade} />)
-      }
+    <div className="flex justify-center">
+      <div className="grid w-full max-w-sm gap-6">
+        <HomeHeader />
+        <BaseIncomeForm income={income?.income} filingStatus={income?.filingStatus} />
+        {
+          hasTaxDetails && (
+            <IncomeTaxAmounts income={income?.income} filingStatus={income?.filingStatus as FilingStatus} />
+          )
+        }
+        <Button
+          type="button"
+          variant="ghost"
+          size="default"
+          full
+          onClick={toggleHandler}
+        >
+          Add trade
+        </Button>
+        {
+          toggle && (
+            <TradeForm type="buy" onSubmit={toggleHandler} />
+          )
+        }
+      </div>
+      <div>
+        {
+          trades?.map((trade) => <TradeItem key={trade.id} trade={trade} />)
+        }
+      </div>
     </div>
   );
 }
