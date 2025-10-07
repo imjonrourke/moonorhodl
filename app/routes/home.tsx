@@ -54,11 +54,11 @@ export default function Home() {
       <div className="grid w-full max-w-sm gap-6">
         <HomeHeader />
         <BaseIncomeForm income={income?.income} filingStatus={income?.filingStatus} />
-        {
-          hasTaxDetails && (
-            <IncomeTaxAmounts income={income?.income} filingStatus={income?.filingStatus as FilingStatus} />
-          )
-        }
+        <div className="pt-6 flex flex-col gap-6">
+          {
+            trades?.map((trade) => <TradeItem key={trade.id} trade={trade} />)
+          }
+        </div>
         <Button
           type="button"
           variant="ghost"
@@ -73,10 +73,10 @@ export default function Home() {
             <TradeForm type="buy" onSubmit={toggleHandler} />
           )
         }
-      </div>
-      <div className="pt-6 flex flex-col gap-6">
         {
-          trades?.map((trade) => <TradeItem key={trade.id} trade={trade} />)
+          hasTaxDetails && (
+            <IncomeTaxAmounts income={incomeInfo as number} filingStatus={filingStatusInfo as FilingStatus} />
+          )
         }
       </div>
     </div>

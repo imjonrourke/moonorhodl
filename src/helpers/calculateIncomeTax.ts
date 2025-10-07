@@ -1,4 +1,4 @@
-import type { FilingStatus } from '../types';
+import type { FilingStatus, TaxAmountResult } from '../types';
 import { calculateTaxAmount } from './calculateTaxAmount';
 import * as FederalIncomeTaxRates from '../../taxRates/2025/income/federal.json';
 
@@ -9,6 +9,7 @@ type CalculateIncomeTax = {
 
 type CalculateIncomeTaxResult = {
   federal: number;
+  federalTaxBrackets: TaxAmountResult[];
   effectiveTaxRate: number;
   state: number;
   city: number;
@@ -18,9 +19,9 @@ type CalculateIncomeTaxHandler = (calculateIncomeTaxArgs: CalculateIncomeTax) =>
 
 export const calculateIncomeTax: CalculateIncomeTaxHandler = ({ income, filingStatus }) => {
   const taxableIncome = income <= FederalIncomeTaxRates[filingStatus].standardDeduction ? 0 : income - FederalIncomeTaxRates[filingStatus].standardDeduction
-  const federalTaxLimits = calculateTaxAmount(taxableIncome, 0, FederalIncomeTaxRates[filingStatus].rates);
+  const federalTaxBrackets = calculateTaxAmount(taxableIncome, 0, FederalIncomeTaxRates[filingStatus].rates);
 
-  const federal = federalTaxLimits.reduce((acc, currentValue) => {
+  const federal = federalTaxBrackets.reduce((acc, currentValue) => {
     return acc + currentValue.taxes;
   }, 0);
 
@@ -28,6 +29,7 @@ export const calculateIncomeTax: CalculateIncomeTaxHandler = ({ income, filingSt
 
   return {
     federal,
+    federalTaxBrackets,
     effectiveTaxRate,
     state: 0,
     city: 0,

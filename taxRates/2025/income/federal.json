@@ -30,6 +30,12 @@
         "rate": 0.37
       }
     ],
+    "deductions": [
+      {
+        "type": "standardDeduction",
+        "value": 15750
+      }
+    ],
     "standardDeduction": 15750
   },
   "marriedJointly": {
@@ -61,6 +67,12 @@
       {
         "limit": -1,
         "rate": 0.37
+      }
+    ],
+    "deductions": [
+      {
+        "type": "standardDeduction",
+        "value": 31500
       }
     ],
     "standardDeduction": 31500
@@ -96,6 +108,12 @@
         "rate": 0.37
       }
     ],
+    "deductions": [
+      {
+        "type": "standardDeduction",
+        "value": 15750
+      }
+    ],
     "standardDeduction": 15750
   },
   "headOfHousehold":{
@@ -127,6 +145,12 @@
       {
         "limit": -1,
         "rate": 0.37
+      }
+    ],
+    "deductions": [
+      {
+        "type": "standardDeduction",
+        "value": 23625
       }
     ],
     "standardDeduction": 23625

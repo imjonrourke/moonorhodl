@@ -1,11 +1,6 @@
-import type { TaxBracketLimit } from '../types';
+import type { TaxAmountResult, TaxBracketLimit } from '../types';
 
-type CalculateTaxAmountResult = {
-  taxes: number;
-  bracket: TaxBracketLimit;
-};
-
-type CalculateTaxAmountHandler = (income: number, previousLimit: number, taxBracketLimits: TaxBracketLimit[]) => CalculateTaxAmountResult[];
+type CalculateTaxAmountHandler = (income: number, previousLimit: number, taxBracketLimits: TaxBracketLimit[]) => TaxAmountResult[];
 
 export const calculateTaxAmount: CalculateTaxAmountHandler = (income, previousLimit, taxBracketLimits) => {
   const [currentBracketLimit, ...remainingBracketLimits] = taxBracketLimits;

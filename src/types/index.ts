@@ -27,3 +27,8 @@ export type Trade = {
 };
 
 export type NewTrade = Omit<Trade, 'id'>;
+
+export type TaxAmountResult = {
+  taxes: number;
+  bracket: TaxBracketLimit;
+};
