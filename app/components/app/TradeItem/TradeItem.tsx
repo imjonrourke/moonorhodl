@@ -30,14 +30,14 @@ export const TradeItem: FunctionComponent<TradeItemProps> = ({ trade }) => {
       <Item variant="outline">
         <ItemContent>
           <Badge variant="default">{trade.type}</Badge>
-          <p>{trade.assetType}</p>
+          <span>{trade.assetType}</span>
         </ItemContent>
         <ItemContent>
           <ItemTitle>
             {trade.name}
           </ItemTitle>
           <ItemDescription>
-            <p>{trade.quantity}</p>
+            {trade.quantity}
           </ItemDescription>
         </ItemContent>
         <ItemActions>

@@ -26,32 +26,34 @@ export const TradeForm: FunctionComponent<TradeFormProps> = ({ type, onSubmit })
   return (
     <div>
       <Form action={actionUrls[type]} method="POST" key={FormKeys.homeTrades} navigate={false} onSubmit={onSubmit}>
-        <RadioGroup
-          name="assetType"
-          defaultValue={AssetTypeTitles.crypto.value}
-          orientation="horizontal"
-          className="flex justify-center align-middle"
-          onValueChange={handleAssetType}
-        >
-          {
-            Object.keys(AssetTypeTitles).map((assetTypeTitle) => (
-              <div className="flex items-center gap-3">
-                <RadioGroupItem id={assetTypeTitle} value={assetTypeTitle} className="peer" hidden />
-                <Label
-                  htmlFor={assetTypeTitle}
-                  className={
-                    cn(
-                      'rounded-lg border-1 p-2 border-transparent',
-                      assetType === assetTypeTitle && labelStyles,
-                    )
-                  }
-                >
-                  {AssetTypeTitles[assetTypeTitle as AssetType].label}
-                </Label>
-              </div>
-            ))
-          }
-        </RadioGroup>
+        <div className="grid w-full max-w-sm gap-6">
+          <RadioGroup
+            name="assetType"
+            defaultValue={AssetTypeTitles.crypto.value}
+            orientation="horizontal"
+            className="flex justify-center align-middle"
+            onValueChange={handleAssetType}
+          >
+            {
+              (Object.keys(AssetTypeTitles) as AssetType[]).map((assetTypeTitle) => (
+                <div className="flex items-center gap-3">
+                  <RadioGroupItem id={assetTypeTitle} value={assetTypeTitle} className="peer" hidden />
+                  <Label
+                    htmlFor={assetTypeTitle}
+                    className={
+                      cn(
+                        'rounded-lg border-1 p-2 border-transparent',
+                        assetType === assetTypeTitle && labelStyles,
+                      )
+                    }
+                  >
+                    {AssetTypeTitles[assetTypeTitle].label}
+                  </Label>
+                </div>
+              ))
+            }
+          </RadioGroup>
+        </div>
         <div>
           <TradeFormBase type={type} assetType={assetType} />
         </div>

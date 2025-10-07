@@ -7,6 +7,8 @@ import { Label } from '~/components/ui/label';
 import { useTradeForm } from '../../../../src/hooks';
 import { type TradeFormBaseProps } from './TradeFormBaseProps';
 import { CreateTradeForm } from '../../../../src/forms/CreateTradeForm';
+import { Field, FieldLabel } from '~/components/ui/field';
+import { CurrencyInput } from '~/components/app/CurrencyInput/CurrencyInput';
 
 export const TradeFormBase: React.FunctionComponent<TradeFormBaseProps> = ({ type, assetType, id, name, quantity, amount, date, isEdit }) => {
   const isBuy = type === 'buy';
@@ -15,7 +17,6 @@ export const TradeFormBase: React.FunctionComponent<TradeFormBaseProps> = ({ typ
 
   const {
     hasId,
-    assetTypeTitle,
     nameValue,
     quantityValue,
     amountValue,
@@ -35,40 +36,49 @@ export const TradeFormBase: React.FunctionComponent<TradeFormBaseProps> = ({ typ
   }
 
   return (
-    <div>
-      <h3>{assetTypeTitle}</h3>
+    <div className="grid w-full max-w-sm gap-6">
       <input type="hidden" id={CreateTradeForm.assetType} name={CreateTradeForm.assetType} value={assetType} />
-      <Label htmlFor={CreateTradeForm.name}>Name</Label>
-      <Input id={CreateTradeForm.name} name={CreateTradeForm.name} placeholder="Name" type="text" />
-      <Label htmlFor={CreateTradeForm.quantity}>Quantity</Label>
-      <NumericFormat
-        id={CreateTradeForm.quantity}
-        name={CreateTradeForm.quantity}
-        customInput={Input}
-        value={quantityValue}
-        thousandSeparator
-      />
-      <Label htmlFor={CreateTradeForm.amount}>Amount</Label>
-      <NumericFormat
-        id={CreateTradeForm.amount}
-        name={CreateTradeForm.amount}
-        customInput={Input}
-        value={amountValue}
-        thousandSeparator
-        decimalScale={2}
-      />
-      <DatePicker name={CreateTradeForm.date} id="date" />
-      <Button size="lg" variant="default" type="submit" full>
-        {
-          isBuy && `Add ${assetType} purchase`
-        }
-        {
-          isSell && `Add ${assetType} sale`
-        }
-        {
-          isSwap && `Add ${assetType} swap`
-        }
-      </Button>
+      <Field>
+        <FieldLabel htmlFor={CreateTradeForm.name}>Name</FieldLabel>
+        <Input id={CreateTradeForm.name} name={CreateTradeForm.name} placeholder="Name" type="text" />
+      </Field>
+      <Field>
+        <FieldLabel htmlFor={CreateTradeForm.amount}>Amount</FieldLabel>
+        <NumericFormat
+          id={CreateTradeForm.amount}
+          name={CreateTradeForm.amount}
+          customInput={CurrencyInput}
+          value={amountValue}
+          placeholder="Transaction amount"
+          thousandSeparator
+        />
+      </Field>
+      <Field>
+        <FieldLabel htmlFor={CreateTradeForm.quantity}>Quantity</FieldLabel>
+        <NumericFormat
+          id={CreateTradeForm.quantity}
+          name={CreateTradeForm.quantity}
+          customInput={Input}
+          value={quantityValue}
+          thousandSeparator
+        />
+      </Field>
+      <Field>
+        <DatePicker name={CreateTradeForm.date} id={CreateTradeForm.date} label="Transaction date" isField />
+      </Field>
+      <Field>
+        <Button size="lg" variant="default" type="submit" full>
+          {
+            isBuy && `Add ${assetType} purchase`
+          }
+          {
+            isSell && `Add ${assetType} sale`
+          }
+          {
+            isSwap && `Add ${assetType} swap`
+          }
+        </Button>
+      </Field>
     </div>
   );
 };

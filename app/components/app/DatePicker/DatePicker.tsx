@@ -9,21 +9,30 @@ import {
   PopoverTrigger,
 } from '~/components/ui/popover'
 import type { DatePickerProps } from '~/components/app/DatePicker/DatePickerProps';
+import { FieldLabel } from '~/components/ui/field';
 
 export const DatePicker: FunctionComponent<DatePickerProps> = ({
   id = "date",
   name,
   date = new Date(),
+  label,
+  isField,
 }) => {
   const [open, setOpen] = useState(false)
   const [localDate, setDate] = useState<Date | undefined>(date)
 
+  const LabelComponent = isField ? FieldLabel : Label;
+
   return (
     <div className="flex flex-col gap-3">
       <input type="hidden" name={name} value={localDate?.toLocaleDateString()} />
-      <Label htmlFor={id} className="px-1">
-        Date
-      </Label>
+      {
+        !!label && (
+          <LabelComponent htmlFor={id} className="px-1">
+            {label}
+          </LabelComponent>
+        )
+      }
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
           <Button

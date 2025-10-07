@@ -5,5 +5,5 @@ export const filterCurrencyChars = (val?: FormDataEntryValue | null) => {
 
   const filteredVal = `${val}`.split('').filter((fval) => fval !== ',').join('');
 
-  return Number(filteredVal).toPrecision(2).valueOf();
+  return Number(filteredVal).valueOf();
 };

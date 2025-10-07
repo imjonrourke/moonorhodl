@@ -29,9 +29,9 @@ const actionUrls = {
   new: '/income/new',
 }
 
-export const BaseIncomeForm: FunctionComponent<BaseIncomeFormProps> = ({ income, filingStatus }) => {
+export const BaseIncomeForm: FunctionComponent<BaseIncomeFormProps> = ({ className, income, filingStatus }) => {
   return (
-    <Form action={actionUrls.new} method="POST" key={FormKeys.homeIncome} navigate={false}>
+    <Form action={actionUrls.new} method="POST" key={FormKeys.homeIncome} navigate={false} className={className}>
       <div className="grid w-full max-w-sm gap-6">
         <NumericFormat
           id={CreateBaseIncomeForm.income}

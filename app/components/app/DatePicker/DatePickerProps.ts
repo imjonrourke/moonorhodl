@@ -4,4 +4,6 @@ export interface DatePickerProps extends BaseProps {
   date?: Date;
   id?: string;
   name: string;
+  label?: string;
+  isField?: boolean;
 }

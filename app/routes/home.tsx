@@ -12,8 +12,8 @@ import { FormKeys } from '../../src/utils/constants';
 import { getIncome } from '~/loaders/getIncome';
 import { HomeHeader } from '../../src/components';
 import type { SetTradesDataResult } from '../../src/utils/LocalStorage/LocalStorageProps';
-import { useToggle } from '../../src/hooks/useToggle';
 import type { FilingStatus } from '../../src/types';
+import { AddTradeForm } from '~/components/app/AddTradeForm';
 
 export async function clientLoader() {
   const { data: tradesData, error } = await getTrades();
@@ -41,7 +41,6 @@ export function meta({}: Route.MetaArgs) {
 export default function Home() {
   const incomeFetcher = useFetcher<SetTradesDataResult>({ key: FormKeys.homeIncome });
   const tradesFetcher = useFetcher<SetTradesDataResult>({ key: FormKeys.homeTrades });
-  const { toggle, toggleHandler } = useToggle();
 
   const { trades, income } = useHomeLoaderData({ trades: tradesFetcher.data?.data?.trades });
 
@@ -51,28 +50,18 @@ export default function Home() {
 
   return (
     <div className="flex justify-center">
-      <div className="grid w-full max-w-sm gap-6">
+      <div className="pt-6 grid w-full max-w-sm gap-6">
         <HomeHeader />
-        <BaseIncomeForm income={income?.income} filingStatus={income?.filingStatus} />
-        <div className="pt-6 flex flex-col gap-6">
+        <BaseIncomeForm
+          income={income?.income}
+          filingStatus={income?.filingStatus}
+        />
+        <div className="flex flex-col gap-6">
           {
             trades?.map((trade) => <TradeItem key={trade.id} trade={trade} />)
           }
         </div>
-        <Button
-          type="button"
-          variant="ghost"
-          size="default"
-          full
-          onClick={toggleHandler}
-        >
-          Add trade
-        </Button>
-        {
-          toggle && (
-            <TradeForm type="buy" onSubmit={toggleHandler} />
-          )
-        }
+        <AddTradeForm />
         {
           hasTaxDetails && (
             <IncomeTaxAmounts income={incomeInfo as number} filingStatus={filingStatusInfo as FilingStatus} />

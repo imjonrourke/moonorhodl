@@ -9,12 +9,12 @@ export const createIncome = async ({ request }: ClientActionFunctionArgs) => {
   const formData = await request.formData();
 
   const fdIncome = formData.get(CreateBaseIncomeForm.income);
-  console.log('createIncome', fdIncome);
 
   const fdFilingStatus = formData.get(CreateBaseIncomeForm.filingStatus);
 
   const income = filterCurrencyChars(fdIncome);
-  const filingStatus = `${fdFilingStatus}`
+
+  const filingStatus = fdFilingStatus && `${fdFilingStatus}` || '';
 
   // TODO: parse form data
   // TODO: validate form data
