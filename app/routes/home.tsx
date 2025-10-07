@@ -74,7 +74,7 @@ export default function Home() {
           )
         }
       </div>
-      <div>
+      <div className="pt-6 flex flex-col gap-6">
         {
           trades?.map((trade) => <TradeItem key={trade.id} trade={trade} />)
         }

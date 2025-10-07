@@ -7,9 +7,17 @@ export const IncomeTaxAmounts: FunctionComponent<IncomeTaxAmountsProps> = ({ inc
 
   return (
     <div>
-      <p>Federal income tax: ${federalTax}</p>
+      <p className="flex flex-col items-center justify-center text-center">
+        <strong className="text-7xl font-bold tracking-tighter">${federalTax}</strong>
+        <span>What you owe</span>
+      </p>
+      <p className="flex flex-col items-center justify-center text-center">
+        <strong className="text-7xl font-bold tracking-tighter">${afterTaxIncome}</strong>
+        <span>What you keep</span>
+      </p>
+      {/* <p>Federal income tax: ${federalTax}</p> */}
       <p>Effective tax rate: {effectiveTaxRate}%</p>
-      <p>Your bag: ${afterTaxIncome}</p>
+      {/* <p>Your bag: ${afterTaxIncome}</p> */}
     </div>
   );
 };

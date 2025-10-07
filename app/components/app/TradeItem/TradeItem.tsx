@@ -4,12 +4,13 @@ import { useTransactionItem } from '~/hooks/useTransactionItem';
 import { Item, ItemActions, ItemContent, ItemDescription, ItemTitle, ItemMedia } from '~/components/ui/item';
 import { Button } from '~/components/ui/button';
 import { Badge } from '~/components/ui/badge';
+import { Ellipsis } from 'lucide-react';
 
 export const TradeItem: FunctionComponent<TradeItemProps> = ({ trade }) => {
   const { cost } = useTransactionItem(trade);
 
   return (
-    <div className="flex flex-col gap-6">
+    <>
       {/* <Item> */}
       {/*   <ItemContent> */}
       {/*     <ItemTitle>{trade.name}</ItemTitle> */}
@@ -46,8 +47,8 @@ export const TradeItem: FunctionComponent<TradeItemProps> = ({ trade }) => {
               <strong>${cost}</strong>
             </p>
           </div>
-          <Button variant="outline" size="sm">
-            Open
+          <Button variant="link" size="sm">
+            <Ellipsis />
           </Button>
         </ItemActions>
       </Item>
@@ -64,7 +65,7 @@ export const TradeItem: FunctionComponent<TradeItemProps> = ({ trade }) => {
       {/*     </Button> */}
       {/*   </ItemActions> */}
       {/* </Item> */}
-    </div>
+    </>
   );
 
   // return (
