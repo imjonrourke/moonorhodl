@@ -1,8 +1,9 @@
 import type { FunctionComponent } from 'react';
 import type { TradeItemProps } from '~/components/app/TradeItem/TradeItemProps';
 import { useTransactionItem } from '~/hooks/useTransactionItem';
-import { Item, ItemActions, ItemContent, ItemDescription, ItemTitle } from '~/components/ui/item';
+import { Item, ItemActions, ItemContent, ItemDescription, ItemTitle, ItemMedia } from '~/components/ui/item';
 import { Button } from '~/components/ui/button';
+import { Badge } from '~/components/ui/badge';
 
 export const TradeItem: FunctionComponent<TradeItemProps> = ({ trade }) => {
   const { cost } = useTransactionItem(trade);
@@ -27,15 +28,24 @@ export const TradeItem: FunctionComponent<TradeItemProps> = ({ trade }) => {
       {/* </Item> */}
       <Item variant="outline">
         <ItemContent>
-          <ItemTitle>{trade.name}</ItemTitle>
+          <Badge variant="default">{trade.type}</Badge>
+          <p>{trade.assetType}</p>
+        </ItemContent>
+        <ItemContent>
+          <ItemTitle>
+            {trade.name}
+          </ItemTitle>
           <ItemDescription>
-            <p>{trade.assetType} - {trade.quantity}</p>
+            <p>{trade.quantity}</p>
           </ItemDescription>
         </ItemContent>
         <ItemActions>
-          <p>
-            <strong>${cost}</strong>
-          </p>
+          <div>
+            <p>Cost</p>
+            <p>
+              <strong>${cost}</strong>
+            </p>
+          </div>
           <Button variant="outline" size="sm">
             Open
           </Button>
