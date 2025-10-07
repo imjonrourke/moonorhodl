@@ -1,8 +1,8 @@
 import type { FunctionComponent } from 'react';
-import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from '~/components/ui/accordion';
 import type { IncomeTaxAmountsProps } from '~/components/app/IncomeTaxAmounts/IncomeTaxAmountsProps';
 import { useIncomeTaxAmounts } from '~/hooks/useIncomeTaxAmounts/useIncomeTaxAmounts';
 import { Emoji } from '~/components/app/Emoji';
+import { TaxBracketDetails } from '~/components/app/TaxBracketDetails';
 
 export const IncomeTaxAmounts: FunctionComponent<IncomeTaxAmountsProps> = ({ income, filingStatus }) => {
   const { federalTax, federalTaxBrackets, effectiveTaxRate, afterTaxIncome } = useIncomeTaxAmounts({ income, filingStatus });
@@ -23,18 +23,10 @@ export const IncomeTaxAmounts: FunctionComponent<IncomeTaxAmountsProps> = ({ inc
           <strong className="font-bold tracking-tighter">{effectiveTaxRate}%</strong>
         </p>
       </div>
-      <Accordion type="single" collapsible>
-        <AccordionItem value="item-1">
-          <AccordionTrigger>Tax details</AccordionTrigger>
-          <AccordionContent>
-            {
-              federalTaxBrackets.map((bracket) => (
-                <p key={bracket.bracket.limit}>{bracket.bracket.rate}: {bracket.taxes}</p>
-              ))
-            }
-          </AccordionContent>
-        </AccordionItem>
-      </Accordion>
+      <TaxBracketDetails
+        title="Tax details"
+        brackets={federalTaxBrackets}
+      />
     </div>
   );
 };
