@@ -1,14 +1,7 @@
-import type { AssetType } from '../types';
-import { AssetTypeTitles } from '../utils/constants';
+import type { AssetType, Trade, TradeType } from '../types';
+import { AssetTypeTitles, TradeTitles } from '../utils/constants';
 
-type UseTradeFormProps = {
-  id?: number;
-  assetType: AssetType;
-  name?: string;
-  quantity?: number;
-  amount?: number;
-  date?: Date;
-};
+type UseTradeFormProps = Partial<Trade> & Pick<Trade, 'assetType' | 'type'> & { isUpdate?: boolean };
 
 type UseTradeFormResult = {
   hasId: boolean;
@@ -17,9 +10,11 @@ type UseTradeFormResult = {
   quantityValue: string;
   amountValue: string;
   dateValue: string;
+  type: TradeType;
+  title: string;
 };
 
-export const useTradeForm: (props: UseTradeFormProps) => UseTradeFormResult = ({ id, assetType, name, quantity, amount, date }) => {
+export const useTradeForm: (props: UseTradeFormProps) => UseTradeFormResult = ({ id, assetType, name, quantity, amount, date, type, isUpdate }) => {
   const hasId = !!id;
 
   const nameValue = name || '';
@@ -29,7 +24,12 @@ export const useTradeForm: (props: UseTradeFormProps) => UseTradeFormResult = ({
 
   const assetTypeTitle = AssetTypeTitles[assetType].label;
 
+  const typeValue = isUpdate ? 'buy' : type;
+  const title = isUpdate ? 'Update' : TradeTitles[type];
+
   return {
+    type: typeValue,
+    title,
     hasId,
     assetTypeTitle,
     nameValue,

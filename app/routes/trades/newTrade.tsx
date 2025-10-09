@@ -1,10 +1,9 @@
 import type { ClientActionFunctionArgs } from 'react-router';
 import { createTrade } from '~/actions/createTrade';
-import { TradeGateway } from '../../src/utils/TradeGateway';
+import { getTrades } from '~/loaders/getTrades';
 
 export async function clientLoader() {
-  const tradeGateway = TradeGateway();
-  return await tradeGateway.getTrades();
+  return getTrades();
 }
 
 export async function clientAction(args: ClientActionFunctionArgs) {

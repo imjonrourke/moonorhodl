@@ -10,37 +10,32 @@ import { CreateTradeForm } from '../../../../src/forms/CreateTradeForm';
 import { Field, FieldLabel } from '~/components/ui/field';
 import { CurrencyInput } from '~/components/app/CurrencyInput/CurrencyInput';
 
-export const TradeFormBase: React.FunctionComponent<TradeFormBaseProps> = ({ type, assetType, id, name, quantity, amount, date, isEdit }) => {
+export const TradeFormBase: React.FunctionComponent<TradeFormBaseProps> = ({ type, assetType, id, name, quantity, amount, date, isUpdate }) => {
   const isBuy = type === 'buy';
   const isSell = type === 'sell';
   const isSwap = type === 'swap';
 
   const {
+    title,
     hasId,
     nameValue,
     quantityValue,
     amountValue,
     dateValue,
-  } = useTradeForm({ id, assetType, name, quantity, amount, date });
-
-  if (hasId && !isEdit) {
-    return (
-      <>
-        <input type="hidden" name="id" value={id} />
-        <input type="hidden" name="name" value={nameValue} />
-        <input type="hidden" name="quantity" value={quantityValue} />
-        <input type="hidden" name="amount" value={amountValue} />
-        <input type="hidden" name="date" value={dateValue} />
-      </>
-    );
-  }
+  } = useTradeForm({ id, assetType, name, quantity, amount, date, type, isUpdate });
 
   return (
     <div className="grid w-full max-w-sm gap-6">
       <input type="hidden" id={CreateTradeForm.assetType} name={CreateTradeForm.assetType} value={assetType} />
       <Field>
         <FieldLabel htmlFor={CreateTradeForm.name}>Name</FieldLabel>
-        <Input id={CreateTradeForm.name} name={CreateTradeForm.name} placeholder="Name" type="text" />
+        <Input
+          id={CreateTradeForm.name}
+          name={CreateTradeForm.name}
+          type="text"
+          placeholder="Name"
+          value={nameValue}
+        />
       </Field>
       <Field>
         <FieldLabel htmlFor={CreateTradeForm.amount}>Amount</FieldLabel>
@@ -69,13 +64,13 @@ export const TradeFormBase: React.FunctionComponent<TradeFormBaseProps> = ({ typ
       <Field>
         <Button size="lg" variant="default" type="submit" full>
           {
-            isBuy && `Add ${assetType} purchase`
+            isBuy && `${title} ${assetType} purchase`
           }
           {
-            isSell && `Add ${assetType} sale`
+            isSell && `${title} ${assetType} sale`
           }
           {
-            isSwap && `Add ${assetType} swap`
+            isSwap && `${title} ${assetType} swap`
           }
         </Button>
       </Field>

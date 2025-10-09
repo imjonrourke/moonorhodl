@@ -8,5 +8,5 @@ export interface TradeFormBaseProps extends BaseProps {
   quantity?: number;
   amount?: number;
   date?: Date;
-  isEdit?: boolean;
+  isUpdate?: boolean;
 }

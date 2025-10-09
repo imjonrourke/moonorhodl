@@ -1,4 +1,4 @@
-import type { AssetType } from '../types';
+import type { AssetType, TradeType } from '../types';
 
 export const BASE_INFO = import.meta.env.VITE_BASE_INFO
 export const TRADE_INFO = import.meta.env.VITE_TRADE_INFO
@@ -29,4 +29,10 @@ export const AssetTypeTitles: Record<AssetType, AssetTypeTitle> = {
 export const FormKeys = {
   homeIncome: 'home:income',
   homeTrades: 'home:trades',
+};
+
+export const TradeTitles: Record<TradeType, string> = {
+  buy: 'Add',
+  sell: 'Sell',
+  swap: 'Swap',
 };

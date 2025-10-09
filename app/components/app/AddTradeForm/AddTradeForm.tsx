@@ -1,34 +1,16 @@
 import type { FunctionComponent } from 'react';
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from '~/components/ui/dialog';
-import { Button } from '~/components/ui/button';
-import { TradeForm } from '~/components/app/TradeForm/TradeForm';
 import type { AddTradeFormProps } from '~/components/app/AddTradeForm/AddTradeFormProps';
-import { useToggle } from '../../../../src/hooks/useToggle';
+import { TradeFormDialog } from '~/components/app/TradeFormDialog';
+import { Button } from '~/components/ui/button';
 
-export const AddTradeForm: FunctionComponent<AddTradeFormProps> = () => {
-  const { toggle, toggleHandler } = useToggle();
-
+export const AddTradeForm: FunctionComponent<AddTradeFormProps> = ({ trade, isUpdate }) => {
   return (
-    <Dialog open={toggle} onOpenChange={toggleHandler}>
-      <DialogTrigger asChild>
+    <TradeFormDialog
+      trade={trade}
+      isUpdate={isUpdate}
+      Trigger={
         <Button variant="outline">Add transaction</Button>
-      </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
-        <DialogHeader>
-          <DialogTitle>Add transaction</DialogTitle>
-          <DialogDescription>
-            Add a transaction to your transaction history.
-          </DialogDescription>
-        </DialogHeader>
-        <TradeForm type="buy" />
-      </DialogContent>
-    </Dialog>
+      }
+    />
   )
 };

@@ -6,9 +6,11 @@ import {
   type GetTradesDataHandler,
   type RemoveTradesDataHandler,
   type RemoveTradeDataHandler,
-  type LocalStorageHandler, type SetTradesDataProps, type AddTradesDataHandler,
+  type LocalStorageHandler,
+  type SetTradesDataProps,
+  type AddTradesDataHandler,
+  type UpdateTradeDataHandler,
 } from './LocalStorageProps';
-import type { ErrorResponse } from '../../types';
 
 export const LocalStorage: LocalStorageHandler = () => {
   const getTradesData: GetTradesDataHandler = async () => {
@@ -60,6 +62,27 @@ export const LocalStorage: LocalStorageHandler = () => {
 
     return {
       data: newTrades,
+      error: null,
+    };
+  };
+
+  const updateTradeData: UpdateTradeDataHandler = async ({ trade }) => {
+    const { data } = await getTradesData();
+
+    const updatedTrades = data?.trades.map((currentTrade) => {
+      if (currentTrade.id === trade.id) {
+        return trade;
+      }
+
+      return currentTrade;
+    }) || [];
+
+    setTradesData({ trades: updatedTrades });
+
+    return {
+      data: {
+        trades: updatedTrades,
+      },
       error: null,
     };
   };
@@ -154,6 +177,7 @@ export const LocalStorage: LocalStorageHandler = () => {
   return {
     getTradesData,
     addTradesData,
+    updateTradeData,
     removeTradeData,
     removeTradesData,
     getBaseIncomeData,
