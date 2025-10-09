@@ -52,7 +52,6 @@ export const TradeItem: FunctionComponent<TradeItemProps> = ({ trade }) => {
               <DropdownMenuContent className="w-56" align="start">
                 <DropdownMenuLabel>Edit transaction</DropdownMenuLabel>
                 <DropdownMenuGroup>
-                    {/*  TODO: encase DropdownMenu in Dialog */}
                     <DialogTrigger asChild>
                       <DropdownMenuItem>
                         Modify
