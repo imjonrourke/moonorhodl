@@ -59,7 +59,7 @@ export const TradeForm: FunctionComponent<TradeFormProps> = ({ trade, isUpdate, 
             }
           </RadioGroup>
         </div>
-        <TradeFormBase {...trade} type={type} assetType={assetType} />
+        <TradeFormBase {...trade} type={type} assetType={assetType} isUpdate={isUpdate} />
       </Form>
     </div>
   );

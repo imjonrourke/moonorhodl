@@ -1,5 +1,4 @@
 import type { FunctionComponent } from 'react';
-import { Form } from 'react-router';
 import { MoreHorizontal } from 'lucide-react';
 import type { TradeItemProps } from '~/components/app/TradeItem/TradeItemProps';
 import { useTransactionItem } from '~/hooks/useTransactionItem';
@@ -12,54 +11,35 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger
 } from '~/components/ui/dropdown-menu';
-import { TradeFormDialog } from '~/components/app/TradeFormDialog';
-import { useToggle } from '../../../../src/hooks/useToggle';
 import { Dialog, DialogTrigger } from '~/components/ui/dialog';
 import { TradeFormDialogBody } from '~/components/app/TradeFormDialogBody';
 
 export const TradeItem: FunctionComponent<TradeItemProps> = ({ trade }) => {
   const { cost } = useTransactionItem(trade);
-  const { toggle, toggleHandler } = useToggle();
 
   return (
     <>
-      {/* <Item> */}
-      {/*   <ItemContent> */}
-      {/*     <ItemTitle>{trade.name}</ItemTitle> */}
-      {/*     <ItemDescription> */}
-      {/*       <p>{trade.assetType} - {trade.quantity}</p> */}
-      {/*     </ItemDescription> */}
-      {/*   </ItemContent> */}
-      {/*   <ItemActions> */}
-      {/*     <p> */}
-      {/*       <strong>${cost}</strong> */}
-      {/*     </p> */}
-      {/*     <Button variant="outline" size="sm"> */}
-      {/*       Open */}
-      {/*     </Button> */}
-      {/*   </ItemActions> */}
-      {/* </Item> */}
       <Item variant="outline" size="sm">
-
         <ItemContent>
           <div className="flex items-center">
-            <div className="flex flex-col">
+            <div className="flex flex-col mr-4 text-center">
               <Badge variant="default">{trade.type}</Badge>
               <span>{trade.assetType}</span>
             </div>
-            <div className="flex flex-col items-start flex-1">
-              <ItemTitle>
-                {trade.name}
-              </ItemTitle>
-              <ItemDescription>
-                {trade.quantity}
-                <div>
-                  <p>Cost</p>
-                  <p>
-                    <strong>${cost}</strong>
-                  </p>
-                </div>
-              </ItemDescription>
+            <div className="flex justify-center items-center flex-1">
+              <div className="flex flex-col flex-1">
+                <ItemTitle>
+                  <h2>{trade.name}</h2>
+                </ItemTitle>
+                <ItemDescription>
+                  <span>{trade.quantity} shares</span>
+                </ItemDescription>
+              </div>
+              <div className="flex flex-col">
+                <p className="flex flex-col">
+                  <strong>${cost}</strong>
+                </p>
+              </div>
             </div>
           </div>
         </ItemContent>
@@ -91,15 +71,4 @@ export const TradeItem: FunctionComponent<TradeItemProps> = ({ trade }) => {
       </Item>
     </>
   );
-
-  // return (
-  //   <div>
-  //     <p>Type: {trade.type}</p>
-  //     <p>Asset type: {trade.assetType}</p>
-  //     <p>Name: {trade.name}</p>
-  //     <p>Cost: ${cost}</p>
-  //     <p>Qty: {trade.quantity}</p>
-  //     <p>Date: {new Date(trade.date).toLocaleDateString()}</p>
-  // </div>
-  // );
 };
