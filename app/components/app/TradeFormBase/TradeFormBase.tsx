@@ -3,10 +3,9 @@ import { NumericFormat } from 'react-number-format';
 import { Input } from '~/components/ui/input';
 import { Button } from '~/components/ui/button';
 import { DatePicker } from '~/components/app/DatePicker';
-import { Label } from '~/components/ui/label';
 import { useTradeForm } from '../../../../src/hooks';
 import { type TradeFormBaseProps } from './TradeFormBaseProps';
-import { CreateTradeForm } from '../../../../src/forms/CreateTradeForm';
+import { SetTradeForm } from '../../../../src/forms/SetTradeForm';
 import { Field, FieldLabel } from '~/components/ui/field';
 import { CurrencyInput } from '~/components/app/CurrencyInput/CurrencyInput';
 
@@ -26,22 +25,27 @@ export const TradeFormBase: React.FunctionComponent<TradeFormBaseProps> = ({ typ
 
   return (
     <div className="grid w-full max-w-sm gap-6">
-      <input type="hidden" id={CreateTradeForm.assetType} name={CreateTradeForm.assetType} value={assetType} />
+      {
+        !!id && (
+          <input type="hidden" id={SetTradeForm.id} name={SetTradeForm.id} value={id} />
+        )
+      }
+      <input type="hidden" id={SetTradeForm.assetType} name={SetTradeForm.assetType} value={assetType} />
       <Field>
-        <FieldLabel htmlFor={CreateTradeForm.name}>Name</FieldLabel>
+        <FieldLabel htmlFor={SetTradeForm.name}>Name</FieldLabel>
         <Input
-          id={CreateTradeForm.name}
-          name={CreateTradeForm.name}
+          id={SetTradeForm.name}
+          name={SetTradeForm.name}
           type="text"
           placeholder="Name"
           value={nameValue}
         />
       </Field>
       <Field>
-        <FieldLabel htmlFor={CreateTradeForm.amount}>Amount</FieldLabel>
+        <FieldLabel htmlFor={SetTradeForm.amount}>Amount</FieldLabel>
         <NumericFormat
-          id={CreateTradeForm.amount}
-          name={CreateTradeForm.amount}
+          id={SetTradeForm.amount}
+          name={SetTradeForm.amount}
           customInput={CurrencyInput}
           value={amountValue}
           placeholder="Transaction amount"
@@ -49,17 +53,27 @@ export const TradeFormBase: React.FunctionComponent<TradeFormBaseProps> = ({ typ
         />
       </Field>
       <Field>
-        <FieldLabel htmlFor={CreateTradeForm.quantity}>Quantity</FieldLabel>
+        <FieldLabel htmlFor={SetTradeForm.quantity}>Quantity</FieldLabel>
         <NumericFormat
-          id={CreateTradeForm.quantity}
-          name={CreateTradeForm.quantity}
+          id={SetTradeForm.quantity}
+          name={SetTradeForm.quantity}
           customInput={Input}
           value={quantityValue}
           thousandSeparator
         />
       </Field>
       <Field>
-        <DatePicker name={CreateTradeForm.date} id={CreateTradeForm.date} label="Transaction date" isField />
+        <FieldLabel>Price per unit</FieldLabel>
+        <NumericFormat
+          id={SetTradeForm.pricePerUnit}
+          name={SetTradeForm.pricePerUnit}
+          customInput={Input}
+          value={quantityValue}
+          thousandSeparator
+        />
+      </Field>
+      <Field>
+        <DatePicker name={SetTradeForm.date} id={SetTradeForm.date} label="Transaction date" isField />
       </Field>
       <Field>
         <Button size="lg" variant="default" type="submit" full>

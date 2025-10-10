@@ -1,4 +1,4 @@
-import { CreateTradeForm } from '../forms/CreateTradeForm';
+import { SetTradeForm } from '../forms/SetTradeForm';
 import type { ParseFormDataBase, Trade } from '../types';
 import { parseTradeType } from './parseTradeType';
 import { parseAssetType } from './parseAssetType';
@@ -7,13 +7,13 @@ import { filterCurrencyChars } from '../helpers';
 export const tradeFormParser: ParseFormDataBase<Trade> = async (request) => {
   const formData = await request.formData();
 
-  const fdId = formData.get(CreateTradeForm.id);
-  const fdType = formData.get(CreateTradeForm.type);
-  const fdAssetType = formData.get(CreateTradeForm.assetType);
-  const fdName = formData.get(CreateTradeForm.name);
-  const fdQuantity = formData.get(CreateTradeForm.quantity);
-  const fdAmount = formData.get(CreateTradeForm.amount);
-  const fdDate = formData.get(CreateTradeForm.date);
+  const fdId = formData.get(SetTradeForm.id);
+  const fdType = formData.get(SetTradeForm.type);
+  const fdAssetType = formData.get(SetTradeForm.assetType);
+  const fdName = formData.get(SetTradeForm.name);
+  const fdQuantity = formData.get(SetTradeForm.quantity);
+  const fdAmount = formData.get(SetTradeForm.amount);
+  const fdDate = formData.get(SetTradeForm.date);
 
   const name = `${fdName || ''}`;
   const quantity = parseInt(`${fdQuantity || 0}`);

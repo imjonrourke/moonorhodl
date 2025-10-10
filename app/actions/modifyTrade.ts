@@ -7,6 +7,8 @@ export const modifyTrade = async ({ request }: ClientActionFunctionArgs) => {
 
   const tradeForm = await tradeFormParser(request);
 
+  console.log('modifyTrade', tradeForm);
+
   const { data, error } = await tradeGateway.updateTrade({
     trade: tradeForm,
   });
