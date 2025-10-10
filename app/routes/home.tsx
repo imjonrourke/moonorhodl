@@ -14,6 +14,7 @@ import { HomeHeader } from '../../src/components';
 import type { SetTradesDataResult } from '../../src/utils/LocalStorage/LocalStorageProps';
 import type { FilingStatus } from '../../src/types';
 import { AddTradeForm } from '~/components/app/AddTradeForm';
+import { BasicCapitalGainsForm } from '~/components/app/BasicCapitalGainsForm';
 
 export async function clientLoader() {
   const { data: tradesData, error } = await getTrades();
@@ -56,6 +57,7 @@ export default function Home() {
           income={income?.income}
           filingStatus={income?.filingStatus}
         />
+        <BasicCapitalGainsForm />
         <div className="flex flex-col gap-6">
           {
             trades?.map((trade) => <TradeItem key={trade.id} trade={trade} />)
