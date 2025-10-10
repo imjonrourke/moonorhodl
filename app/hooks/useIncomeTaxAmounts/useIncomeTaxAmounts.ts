@@ -17,9 +17,9 @@ export const useIncomeTaxAmounts: UseIncomeTaxAmountsHandler = ({ income, filing
   const { value: afterTaxIncome } = useNumericFormat({ value: (income - federal).toFixed(2), thousandSeparator: true });
 
   return {
-    federalTax,
+    federalTax: `${federalTax || '$0.00'}`,
     federalTaxBrackets,
     effectiveTaxRate,
-    afterTaxIncome,
+    afterTaxIncome: `${afterTaxIncome || '$0.00'}`,
   };
 };

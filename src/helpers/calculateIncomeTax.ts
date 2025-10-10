@@ -10,7 +10,7 @@ type CalculateIncomeTax = {
 type CalculateIncomeTaxResult = {
   federal: number;
   federalTaxBrackets: TaxAmountResult[];
-  effectiveTaxRate: number;
+  effectiveTaxRate: string;
   state: number;
   city: number;
 };
@@ -18,7 +18,10 @@ type CalculateIncomeTaxResult = {
 type CalculateIncomeTaxHandler = (calculateIncomeTaxArgs: CalculateIncomeTax) => CalculateIncomeTaxResult;
 
 export const calculateIncomeTax: CalculateIncomeTaxHandler = ({ income, filingStatus }) => {
-  const taxableIncome = income <= FederalIncomeTaxRates[filingStatus].standardDeduction ? 0 : income - FederalIncomeTaxRates[filingStatus].standardDeduction
+  const deductions = FederalIncomeTaxRates[filingStatus].deductions.reduce((acc, value) => {
+    return acc + value.value;
+  }, 0);
+  const taxableIncome = income <= FederalIncomeTaxRates[filingStatus].standardDeduction ? 0 : income - deductions;
   const federalTaxBrackets = calculateTaxAmount(taxableIncome, 0, FederalIncomeTaxRates[filingStatus].rates);
 
   const federal = federalTaxBrackets.reduce((acc, currentValue) => {
