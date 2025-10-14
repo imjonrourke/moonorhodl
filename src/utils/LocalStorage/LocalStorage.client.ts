@@ -1,4 +1,4 @@
-import { TRADES_LIST, BASE_INFO } from '../constants';
+import { TRADES_LIST, BASE_INFO, BASIC_CAPITAL_GAINS } from '../constants';
 import {
   type SetBaseIncomeDataHandler,
   type GetBaseIncomeDataHandler,
@@ -9,7 +9,7 @@ import {
   type LocalStorageHandler,
   type SetTradesDataProps,
   type AddTradesDataHandler,
-  type UpdateTradeDataHandler,
+  type UpdateTradeDataHandler, type GetBasicGainsHandler,
 } from './LocalStorageProps';
 
 export const LocalStorage: LocalStorageHandler = () => {
@@ -174,6 +174,41 @@ export const LocalStorage: LocalStorageHandler = () => {
     window.localStorage.setItem(BASE_INFO, JSON.stringify({ income, filingStatus }));
   };
 
+  const getBasicGainsData: GetBasicGainsHandler = async () => {
+    return new Promise((resolve, reject) => {
+      const basicGains = window.localStorage.getItem(BASIC_CAPITAL_GAINS);
+
+      const data = {
+        shortTermCost: 0,
+        shortTermAmount: 0,
+        longTermCost: 0,
+        longTermAmount: 0,
+      };
+
+      if (basicGains) {
+        try {
+          const result = JSON.parse(basicGains);
+          data.shortTermCost = result.shortTermCost;
+          data.shortTermAmount = result.shortTermAmount;
+          data.longTermCost = result.longTermCost;
+          data.longTermAmount = result.longTermAmount;
+
+          resolve({ data, error: null });
+        } catch (e) {
+          resolve({
+            data: null,
+            error: {
+              status: 503,
+              message: 'invalid',
+            },
+          });
+        }
+      }
+
+      resolve({ data, error: null });
+    });
+  };
+
   return {
     getTradesData,
     addTradesData,
@@ -182,5 +217,6 @@ export const LocalStorage: LocalStorageHandler = () => {
     removeTradesData,
     getBaseIncomeData,
     setBaseIncomeData,
+    getBasicGainsData,
   };
 };

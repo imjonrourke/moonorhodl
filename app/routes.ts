@@ -8,7 +8,7 @@ export default [
   ...prefix('gains', [
       ...prefix('basic', [
         route('new', 'routes/gains/setCapitalGains.tsx'),
-        route('update', 'routes/gains/setCapitalGains.tsx'),
+        // route('update', 'routes/gains/setCapitalGains.tsx'),
       ]),
   ]),
   ...prefix('trades', [

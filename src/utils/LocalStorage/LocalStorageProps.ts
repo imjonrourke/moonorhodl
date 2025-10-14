@@ -1,4 +1,4 @@
-import type { FilingStatus, GatewayResult, Trade } from '../../types';
+import type { BasicGains, FilingStatus, GatewayResult, Trade } from '../../types';
 
 export type SetBaseIncomeDataProps = {
   income: number | string;
@@ -27,6 +27,10 @@ export type UpdateTradeDataHandler = (props: SetTradeDataProps) =>  Promise<SetT
 export type RemoveTradeDataHandler = (tradeId: number) => Promise<SetTradesDataResult>;
 export type RemoveTradesDataHandler = (tradeIds: number[]) => Promise<SetTradesDataResult>;
 
+export type SetBasicGainsResult = Omit<GatewayResult<BasicGains>, 'fetcher'>;
+
+export type GetBasicGainsHandler = () => Promise<SetBasicGainsResult>;
+
 export type LocalStorageHandler = () => {
   getTradesData: GetTradesDataHandler;
   addTradesData: AddTradesDataHandler;
@@ -35,4 +39,5 @@ export type LocalStorageHandler = () => {
   removeTradesData: RemoveTradesDataHandler;
   getBaseIncomeData: GetBaseIncomeDataHandler;
   setBaseIncomeData: SetBaseIncomeDataHandler;
+  getBasicGainsData: GetBasicGainsHandler;
 };

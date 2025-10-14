@@ -7,9 +7,17 @@ import type {
   AddWalletAssetsHandler,
   RemoveWalletAssetHandler,
   RemoveWalletAssetsHandler,
+  GetBasicGainsHandler,
 } from './WalletGatewayProps';
+import { LocalStorage } from '../LocalStorage';
 
 export const WalletGateway: WalletGatewayHandler = () => {
+  const localStorage = LocalStorage();
+
+  const getBasicGains: GetBasicGainsHandler = () => {
+    const basicGains = localStorage.getBasicGainsData();
+  };
+
   const getWallet: GetWalletHandler = () => {};
   const getWalletAsset: GetWalletAssetHandler = (id: number) => {};
   const getWalletAssets: GetWalletAssetsHandler = () => {};

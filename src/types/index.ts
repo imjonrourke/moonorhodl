@@ -66,3 +66,10 @@ export type Transaction = {
   fee: number;
   date: Date;
 };
+
+export type BasicGains = {
+  shortTermCost: number;
+  shortTermAmount: number;
+  longTermCost: number;
+  longTermAmount: number;
+};

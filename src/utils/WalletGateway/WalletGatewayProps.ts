@@ -1,4 +1,4 @@
-import type { Wallet, WalletAsset } from '../../types';
+import type { BasicGains, Wallet, WalletAsset } from '../../types';
 
 export interface WalletGatewayProps {}
 
@@ -11,6 +11,10 @@ export type AddWalletAssetsHandler = (walletAssets: WalletAsset[]) => Promise<Wa
 export type RemoveWalletAssetHandler = (id: number) => Promise<boolean>;
 export type RemoveWalletAssetsHandler = (id: number[]) => Promise<boolean>;
 
+export type GetBasicGainsHandler = () => Promise<BasicGains>;
+export type AddBasicGatewayHandler = (gains: BasicGains) => Promise<BasicGains>;
+export type RemoveBasicGatewayHandler = () => Promise<boolean>;
+
 export type WalletGatewayHandler = () => {
   getWallet: GetWalletHandler;
   getWalletAsset: GetWalletAssetHandler;
@@ -19,4 +23,6 @@ export type WalletGatewayHandler = () => {
   addWalletAssets: AddWalletAssetsHandler;
   removeWalletAsset: RemoveWalletAssetHandler;
   removeWalletAssets: RemoveWalletAssetsHandler;
+
+  getBasicGains: GetBasicGainsHandler;
 };
