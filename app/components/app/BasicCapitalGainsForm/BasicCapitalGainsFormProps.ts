@@ -1,3 +1,5 @@
-import type { BaseProps } from '../../../../src/types';
+import type { BaseProps, BasicGains } from '../../../../src/types';
 
-export interface BasicCapitalGainsFormProps extends BaseProps {}
+export interface BasicCapitalGainsFormProps extends BaseProps {
+  gains: BasicGains;
+}

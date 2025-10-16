@@ -4,9 +4,6 @@ import { createTrade } from '~/actions/createTrade';
 import { getTrades } from '~/loaders/getTrades';
 import { BaseIncomeForm } from '~/components/app/BaseIncomeForm';
 import { useHomeLoaderData } from '~/hooks/useHomeLoaderData/useHomeLoaderData';
-import { Button } from '~/components/ui/button';
-import { TradeForm } from '~/components/app/TradeForm/TradeForm';
-import { IncomeTaxAmounts } from '~/components/app/IncomeTaxAmounts';
 import { TradeItem } from '~/components/app/TradeItem';
 import { FormKeys } from '../../src/utils/constants';
 import { getIncome } from '~/loaders/getIncome';
@@ -15,15 +12,19 @@ import type { SetTradesDataResult } from '../../src/utils/LocalStorage/LocalStor
 import type { FilingStatus } from '../../src/types';
 import { AddTradeForm } from '~/components/app/AddTradeForm';
 import { BasicCapitalGainsForm } from '~/components/app/BasicCapitalGainsForm';
+import { TotalTaxAmounts } from '~/components/app/TotalTaxAmounts/TotalTaxAmounts';
+import { getGains } from '~/loaders/getGains';
 
 export async function clientLoader() {
   const { data: tradesData, error } = await getTrades();
   const { data: incomeData, error: incomeError } = await getIncome();
+  const { data: gainsData, error: gainsError } = await getGains();
 
   return {
     data: {
       trades: tradesData,
       income: incomeData,
+      gains: gainsData,
     }
   };
 }
@@ -43,7 +44,7 @@ export default function Home() {
   const incomeFetcher = useFetcher<SetTradesDataResult>({ key: FormKeys.homeIncome });
   const tradesFetcher = useFetcher<SetTradesDataResult>({ key: FormKeys.homeTrades });
 
-  const { trades, income } = useHomeLoaderData({ trades: tradesFetcher.data?.data?.trades });
+  const { trades, income, gains } = useHomeLoaderData({ trades: tradesFetcher.data?.data?.trades });
 
   const incomeInfo = income?.income;
   const filingStatusInfo = income?.filingStatus;
@@ -57,7 +58,9 @@ export default function Home() {
           income={income?.income}
           filingStatus={income?.filingStatus}
         />
-        <BasicCapitalGainsForm />
+        <BasicCapitalGainsForm
+          gains={gains}
+        />
         <div className="flex flex-col gap-6">
           {
             trades?.map((trade) => <TradeItem key={trade.id} trade={trade} />)
@@ -66,7 +69,11 @@ export default function Home() {
         <AddTradeForm />
         {
           hasTaxDetails && (
-            <IncomeTaxAmounts income={incomeInfo as number} filingStatus={filingStatusInfo as FilingStatus} />
+            <TotalTaxAmounts
+              income={incomeInfo as number}
+              filingStatus={filingStatusInfo as FilingStatus}
+              gains={gains}
+            />
           )
         }
       </div>

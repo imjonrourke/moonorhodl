@@ -1,29 +1,12 @@
 import { type FunctionComponent } from 'react';
 import { NumericFormat } from 'react-number-format';
-import * as React from 'react';
 import { Form } from 'react-router';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '~/components/ui/select';
 import { Button } from '~/components/ui/button';
 import { CurrencyInput } from '~/components/app/CurrencyInput/CurrencyInput';
 import { CreateBaseIncomeForm, CreateBaseIncomeFormValues } from '../../../../src/forms/BaseIncomeForm';
 import { FormKeys } from '../../../../src/utils/constants';
-import type { FilingStatus } from '../../../../src/types';
 import type { BaseIncomeFormProps } from './BaseIncomeFormProps';
-
-const items = [
-  {
-    id: 'single' as FilingStatus,
-    value: 'Single',
-  },
-  {
-    id: 'marriedJointly' as FilingStatus,
-    value: 'Married filing jointly',
-  },
-  {
-    id: 'marriedSeparately' as FilingStatus,
-    value: 'Married filing separately',
-  },
-];
 
 const actionUrls = {
   new: '/income/new',

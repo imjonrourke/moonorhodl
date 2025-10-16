@@ -1,6 +1,5 @@
-import type { BasicGains, Wallet, WalletAsset } from '../../types';
-
-export interface WalletGatewayProps {}
+import type { Wallet, WalletAsset } from '../../types';
+import type { AddBasicGainsHandler, GetBasicGainsHandler } from '../LocalStorage/LocalStorageProps';
 
 export type GetWalletHandler = () => Promise<Wallet>;
 
@@ -11,18 +10,20 @@ export type AddWalletAssetsHandler = (walletAssets: WalletAsset[]) => Promise<Wa
 export type RemoveWalletAssetHandler = (id: number) => Promise<boolean>;
 export type RemoveWalletAssetsHandler = (id: number[]) => Promise<boolean>;
 
-export type GetBasicGainsHandler = () => Promise<BasicGains>;
-export type AddBasicGatewayHandler = (gains: BasicGains) => Promise<BasicGains>;
 export type RemoveBasicGatewayHandler = () => Promise<boolean>;
 
-export type WalletGatewayHandler = () => {
-  getWallet: GetWalletHandler;
-  getWalletAsset: GetWalletAssetHandler;
-  getWalletAssets: GetWalletAssetsHandler;
-  addWalletAsset: AddWalletAssetHandler;
-  addWalletAssets: AddWalletAssetsHandler;
-  removeWalletAsset: RemoveWalletAssetHandler;
-  removeWalletAssets: RemoveWalletAssetsHandler;
+export type GetWalletBasicGainsHandler = GetBasicGainsHandler;
+export type AddWalletBasicGainsHandler = AddBasicGainsHandler;
 
-  getBasicGains: GetBasicGainsHandler;
+export type WalletGatewayHandler = () => {
+  // getWallet: GetWalletHandler;
+  // getWalletAsset: GetWalletAssetHandler;
+  // getWalletAssets: GetWalletAssetsHandler;
+  // addWalletAsset: AddWalletAssetHandler;
+  // addWalletAssets: AddWalletAssetsHandler;
+  // removeWalletAsset: RemoveWalletAssetHandler;
+  // removeWalletAssets: RemoveWalletAssetsHandler;
+
+  getBasicGains: GetWalletBasicGainsHandler;
+  addBasicGains: AddWalletBasicGainsHandler;
 };

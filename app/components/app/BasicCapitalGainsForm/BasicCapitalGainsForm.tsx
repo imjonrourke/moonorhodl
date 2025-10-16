@@ -6,13 +6,14 @@ import { CreateBasicCapitalGainsForm } from '../../../../src/forms/BasicCapitalG
 import type { BasicCapitalGainsFormProps } from './BasicCapitalGainsFormProps';
 import { Field } from '~/components/ui/field';
 import { Button } from '~/components/ui/button';
-import * as React from 'react';
 
 const actionUrls = {
   new: '/gains/basic/new',
 };
 
-export const BasicCapitalGainsForm: FunctionComponent<BasicCapitalGainsFormProps> = ({ className }) => {
+export const BasicCapitalGainsForm: FunctionComponent<BasicCapitalGainsFormProps> = ({ className, gains }) => {
+  const { shortTermCost, shortTermAmount, longTermCost, longTermAmount } = gains;
+
   return (
     <Form action={actionUrls.new} method="POST" key="" navigate={false} className={className}>
       <div className="grid w-full max-w-sm gap-6">
@@ -22,6 +23,7 @@ export const BasicCapitalGainsForm: FunctionComponent<BasicCapitalGainsFormProps
             name={CreateBasicCapitalGainsForm.shortTermCost}
             customInput={CurrencyInput}
             placeholder="Short term total cost"
+            value={shortTermCost || ''}
             thousandSeparator
           />
         </Field>
@@ -31,6 +33,7 @@ export const BasicCapitalGainsForm: FunctionComponent<BasicCapitalGainsFormProps
             name={CreateBasicCapitalGainsForm.shortTermAmount}
             customInput={CurrencyInput}
             placeholder="Short term sell price"
+            value={shortTermAmount || ''}
             thousandSeparator
           />
         </Field>
@@ -40,6 +43,7 @@ export const BasicCapitalGainsForm: FunctionComponent<BasicCapitalGainsFormProps
             name={CreateBasicCapitalGainsForm.longTermCost}
             customInput={CurrencyInput}
             placeholder="Long term total cost"
+            value={longTermCost || ''}
             thousandSeparator
           />
         </Field>
@@ -49,6 +53,7 @@ export const BasicCapitalGainsForm: FunctionComponent<BasicCapitalGainsFormProps
             name={CreateBasicCapitalGainsForm.longTermAmount}
             customInput={CurrencyInput}
             placeholder="Long term sell price"
+            value={longTermAmount || ''}
             thousandSeparator
           />
         </Field>

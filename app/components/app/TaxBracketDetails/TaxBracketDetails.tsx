@@ -1,6 +1,7 @@
 import type { FunctionComponent } from 'react';
 import type { TaxBracketDetailsProps } from '~/components/app/TaxBracketDetails/TaxBracketDetailsProps';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '~/components/ui/accordion';
+import { TaxBracketDetailItem } from '~/components/app/TaxBracketDetailItem';
 
 export const TaxBracketDetails: FunctionComponent<TaxBracketDetailsProps> = ({ title, brackets }) => {
   if (!brackets?.length) {
@@ -14,7 +15,7 @@ export const TaxBracketDetails: FunctionComponent<TaxBracketDetailsProps> = ({ t
         <AccordionContent>
           {
             brackets.map((bracket) => (
-              <p key={bracket.bracket.limit}>{bracket.bracket.rate}: {bracket.taxes}</p>
+              <TaxBracketDetailItem key={bracket.bracket.rate} bracketResult={bracket} />
             ))
           }
         </AccordionContent>

@@ -4,12 +4,13 @@ import type {
   SetTradesDataProps,
   SetTradesDataResult
 } from '../../../src/utils/LocalStorage/LocalStorageProps';
-import type { FilingStatus } from '../../../src/types';
+import type { BasicGains, FilingStatus } from '../../../src/types';
 
 type UseLoaderDataResult = {
   data: {
     trades: SetTradesDataResult['data'],
     income: SetBaseIncomeDataResult['data'],
+    gains: BasicGains,
   },
   error?: SetTradesDataResult['error'],
 }
@@ -25,6 +26,7 @@ type UseHomeLoaderDataResult = {
     income: number;
     filingStatus: FilingStatus;
   } | null,
+  gains: BasicGains;
   error?: SetTradesDataResult['error'],
 };
 
@@ -36,10 +38,12 @@ export const useHomeLoaderData: (args: UseHomeLoaderDataArgs) => UseHomeLoaderDa
     income:  Number(incomeArgs?.income || data?.income?.income || 0),
     filingStatus: incomeArgs?.filingStatus as FilingStatus || data?.income?.filingStatus as FilingStatus || 'single',
   };
+  const gains = data.gains;
 
   return {
     trades,
     income,
+    gains,
     error,
   };
 };

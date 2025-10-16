@@ -27,9 +27,11 @@ export type UpdateTradeDataHandler = (props: SetTradeDataProps) =>  Promise<SetT
 export type RemoveTradeDataHandler = (tradeId: number) => Promise<SetTradesDataResult>;
 export type RemoveTradesDataHandler = (tradeIds: number[]) => Promise<SetTradesDataResult>;
 
-export type SetBasicGainsResult = Omit<GatewayResult<BasicGains>, 'fetcher'>;
+export type GetBasicGainsResult = Omit<GatewayResult<BasicGains>, 'fetcher'>;
 
-export type GetBasicGainsHandler = () => Promise<SetBasicGainsResult>;
+export type GetBasicGainsHandler = () => Promise<GetBasicGainsResult>;
+export type SetBasicGainsHandler = (props: BasicGains) => void;
+export type AddBasicGainsHandler = (props: BasicGains) => Promise<GetBasicGainsResult>;
 
 export type LocalStorageHandler = () => {
   getTradesData: GetTradesDataHandler;
@@ -40,4 +42,5 @@ export type LocalStorageHandler = () => {
   getBaseIncomeData: GetBaseIncomeDataHandler;
   setBaseIncomeData: SetBaseIncomeDataHandler;
   getBasicGainsData: GetBasicGainsHandler;
+  addBasicGainsData: AddBasicGainsHandler;
 };

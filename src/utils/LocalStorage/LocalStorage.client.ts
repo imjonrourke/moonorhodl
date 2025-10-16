@@ -9,7 +9,7 @@ import {
   type LocalStorageHandler,
   type SetTradesDataProps,
   type AddTradesDataHandler,
-  type UpdateTradeDataHandler, type GetBasicGainsHandler,
+  type UpdateTradeDataHandler, type GetBasicGainsHandler, type SetBasicGainsHandler, type AddBasicGainsHandler,
 } from './LocalStorageProps';
 
 export const LocalStorage: LocalStorageHandler = () => {
@@ -209,6 +209,19 @@ export const LocalStorage: LocalStorageHandler = () => {
     });
   };
 
+  const setBasicGainsData: SetBasicGainsHandler = async (args) => {
+    window.localStorage.setItem(BASIC_CAPITAL_GAINS, JSON.stringify(args));
+  };
+
+  const addBasicGainsData: AddBasicGainsHandler = async (args) => {
+    setBasicGainsData(args);
+
+    return {
+      data: args,
+      error: null,
+    };
+  };
+
   return {
     getTradesData,
     addTradesData,
@@ -218,5 +231,6 @@ export const LocalStorage: LocalStorageHandler = () => {
     getBaseIncomeData,
     setBaseIncomeData,
     getBasicGainsData,
+    addBasicGainsData,
   };
 };
